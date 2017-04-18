@@ -209,6 +209,6 @@ collision/mask = 1
 
 [node name="Player" parent="." instance=ExtResource( 4 )]
 
-transform/local = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 8.22787, 0 )
+transform/local = Transform( 0.514702, 0, 0, 0, 0.514702, 0, 0, 0, 0.514702, 0, 8.22787, 0 )
 
 

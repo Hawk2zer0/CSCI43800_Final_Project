@@ -2,7 +2,7 @@
 extends RigidBody
 
 #Macros for various speed and rotational items
-var SpeedMultiplier = 2.0
+var MoveSpeed = 5.0
 var RotationDisplacement = PI/180
 var jumpHeight = 10
 var onFloor = false
@@ -21,6 +21,7 @@ func _ready():
 func _process(delta):
 	
 	checkCollisions()
+	checkKeys(delta)
 
 func checkCollisions():
 	#Obtain our Map
@@ -38,7 +39,39 @@ func checkCollisions():
 			onFloor = true
 			if(jumping):
 				jumping = false
+
+func checkKeys(delta):
+	#with A and D keys, we want to rotate 
+	#rotate Left	
+	if(Input.is_key_pressed(KEY_A)):
+		var playerLoc = get_translation()
+		
+		moveAngle += RotationDisplacement
+		
+		#look location offset
+		var xLookDelta = sin(moveAngle)
+		var zLookDelta = cos(moveAngle)
+		
+		look_at(Vector3(playerLoc.x - xLookDelta, playerLoc.y, playerLoc.z - zLookDelta), Vector3(0,1,0))
+
+		if(moveAngle > 2*PI):
+			moveAngle -= 2*PI
 	
+	#rotate Right
+	if(Input.is_key_pressed(KEY_D)):
+		var playerLoc = get_translation()
+		
+		moveAngle -= RotationDisplacement
+		
+		#look location offset
+		var xLookDelta = sin(moveAngle)
+		var zLookDelta = cos(moveAngle)
+		
+		look_at(Vector3(playerLoc.x - xLookDelta, playerLoc.y, playerLoc.z - zLookDelta), Vector3(0,1,0))
+		
+		if(moveAngle < 0):
+			moveAngle += 2*PI
+
 func _integrate_forces(state):
 	# we only care about movement if keys are pressed that respond to movement
 	var lv = state.get_linear_velocity() #Entity Linear Velocity
@@ -51,8 +84,6 @@ func _integrate_forces(state):
 	var up = -gravity.normalized() # Normal against gravity
 	
 	var yVelocity = up.dot(lv) #Vertical Velocity only (Y-axis)
-	
-	var MoveSpeed = delta * SpeedMultiplier
 	
 	var direction = Vector3() #Where does the player intend to walk to
 	
@@ -79,44 +110,15 @@ func _integrate_forces(state):
 			onFloor = false
 			
 			
-	var target_direction = (direction - up*direction.dot(up)).normalized()
+	var target_direction = (direction - up*direction.dot(up))
 	
-	lv = up*yVelocity
+	lv = target_direction + up*yVelocity
 	
 	state.set_linear_velocity(lv)
 	
 	print(lv)
 	
-	#with A and D keys, we want to rotate 
-	#rotate Left	
-	if(Input.is_key_pressed(KEY_A)):
-		var playerLoc = get_translation()
-		
-		moveAngle += RotationDisplacement
-		
-		#look location offset
-		var xLookDelta = sin(moveAngle)
-		var zLookDelta = cos(moveAngle)
-		
-		#look_at(Vector3(playerLoc.x - xLookDelta, playerLoc.y, playerLoc.z - zLookDelta), Vector3(0,1,0))		
-
-		if(moveAngle > 2*PI):
-			moveAngle -= 2*PI
 	
-	#rotate Right
-	if(Input.is_key_pressed(KEY_D)):
-		var playerLoc = get_translation()
-		
-		moveAngle -= RotationDisplacement
-		
-		#look location offset
-		var xLookDelta = sin(moveAngle)
-		var zLookDelta = cos(moveAngle)
-		
-		get_node("TestCube").look_at(Vector3(playerLoc.x - xLookDelta, playerLoc.y, playerLoc.z - zLookDelta), Vector3(0,1,0))
-		
-		if(moveAngle < 0):
-			moveAngle += 2*PI
 
 func resetLinearVelocity():
 	set_linear_velocity(Vector3(0,0,0))
