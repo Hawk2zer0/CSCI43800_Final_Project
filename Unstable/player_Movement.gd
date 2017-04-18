@@ -8,7 +8,7 @@ var jumpHeight = 10
 var onFloor = false
 var jumping = false
 #Demo Walkthrough
-var last_ground_velocity = Vector3()
+var last_rotation = Vector3()
 
 var moveAngle = 0
 #Collision Boolean
@@ -71,6 +71,9 @@ func checkKeys(delta):
 			moveAngle += 2*PI
 
 func _integrate_forces(state):
+	#reset rotation
+	set_rotation(last_rotation)
+	
 	# we only care about movement if keys are pressed that respond to movement
 	var lv = state.get_linear_velocity() #Entity Linear Velocity
 	var delta = state.get_step() #Frame Rate
@@ -127,8 +130,6 @@ func _integrate_forces(state):
 			
 		set_transform(Transform(thisRotation,playerLoc.origin))
 		
-		print(get_rotation())
-		
 	if(Input.is_key_pressed(KEY_D)):
 		var playerLoc = get_transform()
 		
@@ -141,23 +142,21 @@ func _integrate_forces(state):
 		
 		var targetLoc = playerLoc.origin - offsetVector
 		
-		print(targetLoc)
-		
 		var increment = 1
 		
 		var rotationTransform = playerLoc.looking_at(targetLoc,Vector3(0,1,0))
 		
 		var thisRotation = Quat(playerLoc.basis).slerp(rotationTransform.basis,increment)
 			
-		set_transform(Transform(thisRotation,playerLoc.origin))
-		
-		
-		
+		set_transform(Transform(thisRotation,playerLoc.origin))	
+	
 	var target_direction = (direction - up*direction.dot(up))
 	
 	lv = target_direction + up*yVelocity
 	
 	state.set_linear_velocity(lv)
+	
+	last_rotation = get_rotation()
 	
 	#print(lv)
 	
