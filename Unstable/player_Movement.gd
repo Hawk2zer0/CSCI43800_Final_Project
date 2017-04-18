@@ -17,11 +17,10 @@ var isColliding = false
 func _ready():
 	self.set_process(true)
 	
-	
 func _process(delta):
 	
 	checkCollisions()
-	checkKeys(delta)
+	#checkKeys(delta)
 
 func checkCollisions():
 	#Obtain our Map
@@ -33,7 +32,6 @@ func checkCollisions():
 	for body in collidingBodies:
 		#we won't care about the map collision, as that is normal
 		if (body != Map):
-			print("We're touching something else")
 			isColliding = true
 		elif (body == Map):
 			onFloor = true
@@ -109,14 +107,59 @@ func _integrate_forces(state):
 			yVelocity = jumpHeight
 			onFloor = false
 			
+	if(Input.is_key_pressed(KEY_A)):
+		var playerLoc = get_transform()
+		
+		moveAngle += RotationDisplacement
+		
+		var xLookDelta = sin(moveAngle)
+		var zLookDelta = cos(moveAngle)
+		
+		var offsetVector = Vector3(xLookDelta, 0, zLookDelta)
+		
+		var targetLoc = playerLoc.origin - offsetVector
+		
+		var increment = 1
+		
+		var rotationTransform = playerLoc.looking_at(targetLoc,Vector3(0,1,0))
+		
+		var thisRotation = Quat(playerLoc.basis).slerp(rotationTransform.basis,increment)
 			
+		set_transform(Transform(thisRotation,playerLoc.origin))
+		
+		print(get_rotation())
+		
+	if(Input.is_key_pressed(KEY_D)):
+		var playerLoc = get_transform()
+		
+		moveAngle -= RotationDisplacement
+		
+		var xLookDelta = sin(moveAngle)
+		var zLookDelta = cos(moveAngle)
+		
+		var offsetVector = Vector3(xLookDelta, 0, zLookDelta)
+		
+		var targetLoc = playerLoc.origin - offsetVector
+		
+		print(targetLoc)
+		
+		var increment = 1
+		
+		var rotationTransform = playerLoc.looking_at(targetLoc,Vector3(0,1,0))
+		
+		var thisRotation = Quat(playerLoc.basis).slerp(rotationTransform.basis,increment)
+			
+		set_transform(Transform(thisRotation,playerLoc.origin))
+		
+		
+		
 	var target_direction = (direction - up*direction.dot(up))
 	
 	lv = target_direction + up*yVelocity
 	
 	state.set_linear_velocity(lv)
 	
-	print(lv)
+	#print(lv)
 	
 	
 
