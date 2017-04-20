@@ -3,8 +3,8 @@ extends RigidBody
 
 #Macros for various speed and rotational items
 var MoveSpeed = 5.0
-var RotationDisplacement = PI/180
-var jumpHeight = 10
+var RotationDisplacement = PI/90
+var jumpHeight = 12
 var onFloor = false
 var jumping = false
 #Demo Walkthrough
@@ -18,58 +18,8 @@ func _ready():
 	self.set_process(true)
 	
 func _process(delta):
+	pass
 	
-	checkCollisions()
-	#checkKeys(delta)
-
-func checkCollisions():
-	#Obtain our Map
-	var Map= get_node("/root/Parent_Node/Map")
-	
-	#check what we are colliding with
-	var collidingBodies = get_colliding_bodies()
-	
-	for body in collidingBodies:
-		#we won't care about the map collision, as that is normal
-		if (body != Map):
-			isColliding = true
-		elif (body == Map):
-			onFloor = true
-			if(jumping):
-				jumping = false
-
-func checkKeys(delta):
-	#with A and D keys, we want to rotate 
-	#rotate Left	
-	if(Input.is_key_pressed(KEY_A)):
-		var playerLoc = get_translation()
-		
-		moveAngle += RotationDisplacement
-		
-		#look location offset
-		var xLookDelta = sin(moveAngle)
-		var zLookDelta = cos(moveAngle)
-		
-		look_at(Vector3(playerLoc.x - xLookDelta, playerLoc.y, playerLoc.z - zLookDelta), Vector3(0,1,0))
-
-		if(moveAngle > 2*PI):
-			moveAngle -= 2*PI
-	
-	#rotate Right
-	if(Input.is_key_pressed(KEY_D)):
-		var playerLoc = get_translation()
-		
-		moveAngle -= RotationDisplacement
-		
-		#look location offset
-		var xLookDelta = sin(moveAngle)
-		var zLookDelta = cos(moveAngle)
-		
-		look_at(Vector3(playerLoc.x - xLookDelta, playerLoc.y, playerLoc.z - zLookDelta), Vector3(0,1,0))
-		
-		if(moveAngle < 0):
-			moveAngle += 2*PI
-
 func _integrate_forces(state):
 	#reset rotation
 	set_rotation(last_rotation)
@@ -91,21 +41,25 @@ func _integrate_forces(state):
 	#Let's map our inputs 
 	#forward
 	if(Input.is_key_pressed(KEY_W)):
-		var xDelta = (MoveSpeed) * sin(moveAngle)
-		var zDelta = (MoveSpeed) * cos(moveAngle)
-		direction.x = xDelta
-		direction.z = zDelta
+		if(!isColliding):
+			var xDelta = (MoveSpeed) * sin(moveAngle)
+			var zDelta = (MoveSpeed) * cos(moveAngle)
+			
+			direction.x = xDelta
+			direction.z = zDelta
 	
 	#backward	
 	if(Input.is_key_pressed(KEY_S)):
-		var xDelta = (MoveSpeed) * sin(moveAngle)
-		var zDelta = (MoveSpeed) * cos(moveAngle)
-		direction.x = -xDelta
-		direction.z = -zDelta
+		if(!isColliding):
+			var xDelta = (MoveSpeed) * sin(moveAngle)
+			var zDelta = (MoveSpeed) * cos(moveAngle)
+			
+			
+			direction.x = -xDelta
+			direction.z = -zDelta
 		
 	#Jump
 	if(Input.is_key_pressed(KEY_SPACE)):
-		print(onFloor)
 		if(onFloor and !jumping):
 			yVelocity = jumpHeight
 			onFloor = false
@@ -114,6 +68,8 @@ func _integrate_forces(state):
 		var playerLoc = get_transform()
 		
 		moveAngle += RotationDisplacement
+		if(moveAngle > 2*PI):
+			moveAngle -= 2*PI
 		
 		var xLookDelta = sin(moveAngle)
 		var zLookDelta = cos(moveAngle)
@@ -135,6 +91,9 @@ func _integrate_forces(state):
 		
 		moveAngle -= RotationDisplacement
 		
+		if(moveAngle < 0):
+			moveAngle += 2*PI
+		
 		var xLookDelta = sin(moveAngle)
 		var zLookDelta = cos(moveAngle)
 		
@@ -149,6 +108,63 @@ func _integrate_forces(state):
 		var thisRotation = Quat(playerLoc.basis).slerp(rotationTransform.basis,increment)
 			
 		set_transform(Transform(thisRotation,playerLoc.origin))	
+		
+	#Collision Detection and handling
+	var Map= get_node("/root/Parent_Node/Map")
+	
+	#check what we are colliding with
+	var collidingBodies = get_colliding_bodies()
+	print(collidingBodies)
+	for body in collidingBodies:
+		#we won't care about the map collision, as that is normal
+		if (body != Map):
+			var collidingObjectPosition = body.get_translation()
+			var collidingObjectScale = body.get_scale()
+			var playerPosition = get_translation()
+
+			#we need to consider if it is on top of it
+			var objectTop = collidingObjectPosition.y + (collidingObjectScale.y/4)
+			
+			if((playerPosition.y < objectTop)):
+				isColliding = true
+								
+				#calculate and apply collision pushback				
+				var oppositeLength = abs(collidingObjectPosition.x - playerPosition.x)
+				var adjacentLength = abs(collidingObjectPosition.z - playerPosition.z)
+				
+				#calculate angle to object
+				var angleToObject = atan(oppositeLength/adjacentLength)
+				
+				if(angleToObject > (2*PI)):
+					angleToObject -= (2*PI)
+				elif(angleToObject < 0):
+					angleToObject += (2*PI)
+				
+				#determine offset of the player's actual angle and the angle of the object
+				var offset = angleToObject - moveAngle
+				
+				#determine push away angle			
+				var pushAngle = (angleToObject-PI) + offset
+				
+				#calculate direction vectors as if we are to move to it
+				var xToObject = sin(pushAngle)
+				var zToObject = cos(pushAngle)
+				
+				#apply pushback force
+				direction.x = xToObject
+				direction.z = zToObject
+			else:
+				onFloor = true
+				if(jumping):
+					jumping = false
+			
+		else:
+			if(body == Map):
+				if(collidingBodies.size() == 1):
+					isColliding = false
+				onFloor = true
+				if(jumping):
+					jumping = false
 	
 	var target_direction = (direction - up*direction.dot(up))
 	
@@ -156,11 +172,4 @@ func _integrate_forces(state):
 	
 	state.set_linear_velocity(lv)
 	
-	last_rotation = get_rotation()
-	
-	#print(lv)
-	
-	
-
-func resetLinearVelocity():
-	set_linear_velocity(Vector3(0,0,0))
+	last_rotation = get_rotation()	

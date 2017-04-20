@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=1]
+[gd_scene load_steps=9 format=1]
 
 [ext_resource path="res://Collision.gd" type="Script" id=1]
 [ext_resource path="res://ArenaA.msh" type="Mesh" id=2]
@@ -9,12 +9,7 @@
 
 plane = Plane( 0, 1, 0, 0 )
 
-[sub_resource type="CapsuleShape" id=2]
-
-radius = 1.0
-height = 1.0
-
-[sub_resource type="FixedMaterial" id=3]
+[sub_resource type="FixedMaterial" id=2]
 
 flags/visible = true
 flags/double_sided = false
@@ -52,6 +47,14 @@ textures/glow_tc = 0
 textures/normal_tc = 0
 textures/shade_param_tc = 0
 
+[sub_resource type="BoxShape" id=3]
+
+extents = Vector3( 1, 1, 1 )
+
+[sub_resource type="BoxShape" id=4]
+
+extents = Vector3( 1, 1, 1 )
+
 [node name="Parent_Node" type="Node"]
 
 script/script = ExtResource( 1 )
@@ -86,13 +89,10 @@ _import_transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
 transform/local = Transform( -4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, 0 )
 input/ray_pickable = true
 input/capture_on_drag = false
-shape_count = 2
+shape_count = 1
 shapes/0/shape = SubResource( 1 )
 shapes/0/transform = Transform( 1.50821, 0, 0, 0, 1.50821, 0, 0, 0, 1.50821, 0, 1.14257, -0.897548 )
 shapes/0/trigger = false
-shapes/1/shape = SubResource( 2 )
-shapes/1/transform = Transform( 3.88451, 0, 0, 0, 0.0412863, 3.88429, 0, -3.88429, 0.0412863, -5.57399, 1.62482, 4.47365 )
-shapes/1/trigger = false
 collision/layers = 1
 collision/mask = 1
 mode = 1
@@ -132,7 +132,7 @@ geometry/use_baked_light = false
 geometry/baked_light_tex_id = 0
 mesh/mesh = ExtResource( 2 )
 mesh/skeleton = NodePath("..")
-material/0 = SubResource( 3 )
+material/0 = SubResource( 2 )
 
 [node name="Map_Floor" type="CollisionShape" parent="Map"]
 
@@ -142,23 +142,15 @@ shape = SubResource( 1 )
 trigger = false
 _update_shape_index = 0
 
-[node name="B_Button" type="CollisionShape" parent="Map"]
-
-_import_transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
-transform/local = Transform( 3.88451, 0, 0, 0, 0.0412863, 3.88429, 0, -3.88429, 0.0412863, -5.57399, 1.62482, 4.47365 )
-shape = SubResource( 2 )
-trigger = false
-_update_shape_index = 1
-
 [node name="A_Button_Body" type="RigidBody" parent="Map"]
 
 _import_transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
-transform/local = Transform( 16.9565, 0, 0, 0, 16.9565, 0, 0, 0, 16.9565, 5.59429, 0, 4.49099 )
+transform/local = Transform( 16.9565, 0, 0, 0, 20, 0, 0, 0, 16.9565, 5.63404, -0.858779, 4.49099 )
 input/ray_pickable = true
 input/capture_on_drag = false
 shape_count = 1
-shapes/0/shape = SubResource( 2 )
-shapes/0/transform = Transform( 0.229087, 0, 0, 0, 0.00243484, 0.229074, 0, -0.229074, 0.00243484, 0.00326547, 0.0944435, 0.00278533 )
+shapes/0/shape = SubResource( 3 )
+shapes/0/transform = Transform( 0.221222, 0, 1.77636e-15, 0, 0.221222, 0, -1.77636e-15, 0, 0.221222, 0, 0, 0 )
 shapes/0/trigger = false
 collision/layers = 1
 collision/mask = 1
@@ -179,36 +171,69 @@ velocity/angular = Vector3( 0, 0, 0 )
 damp_override/linear = -1.0
 damp_override/angular = -1.0
 
-[node name="A_Button" type="CollisionShape" parent="Map/A_Button_Body"]
+[node name="A_Button_Box" type="CollisionShape" parent="Map/A_Button_Body"]
 
 _import_transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
-transform/local = Transform( 0.229087, 0, 0, 0, 0.00243484, 0.229074, 0, -0.229074, 0.00243484, 0.00326547, 0.0944435, 0.00278533 )
-shape = SubResource( 2 )
+transform/local = Transform( 0.221222, 0, 1.77636e-15, 0, 0.221222, 0, -1.77636e-15, 0, 0.221222, 0, 0, 0 )
+shape = SubResource( 3 )
 trigger = false
 _update_shape_index = 0
 
-[node name="A_Button_Area" type="Area" parent="Map/A_Button_Body"]
+[node name="B_Button_Body" type="RigidBody" parent="Map"]
 
 _import_transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
-transform/local = Transform( 0.920828, 0, 0, 0, 0.920828, 0, 0, 0, 0.920828, 0.0108773, 0.027861, 0.0104904 )
-input/ray_pickable = false
+transform/local = Transform( 16.9565, 0, 0, 0, 20, 0, 0, 0, 16.9565, -5.56, -0.858779, 4.49099 )
+input/ray_pickable = true
 input/capture_on_drag = false
-shape_count = 0
-space_override = 0
-gravity_point = false
-gravity_distance_scale = 0.0
-gravity_vec = Vector3( 0, -1, 0 )
-gravity = 9.8
-linear_damp = 0.1
-angular_damp = 1.0
-priority = 0.0
-monitoring = true
-monitorable = true
+shape_count = 1
+shapes/0/shape = SubResource( 4 )
+shapes/0/transform = Transform( 0.222977, 0, 3.55271e-15, 0, 0.222977, 0, -3.55271e-15, 0, 0.222977, 2.98023e-08, 0, -2.98023e-08 )
+shapes/0/trigger = false
 collision/layers = 1
 collision/mask = 1
+mode = 1
+mass = 1.0
+friction = 1.0
+bounce = 0.0
+gravity_scale = 1.0
+custom_integrator = false
+continuous_cd = false
+contacts_reported = 0
+contact_monitor = false
+sleeping = false
+can_sleep = true
+axis_lock = 0
+velocity/linear = Vector3( 0, 0, 0 )
+velocity/angular = Vector3( 0, 0, 0 )
+damp_override/linear = -1.0
+damp_override/angular = -1.0
+
+[node name="B_Button_Box" type="CollisionShape" parent="Map/B_Button_Body"]
+
+_import_transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
+transform/local = Transform( 0.222977, 0, 3.55271e-15, 0, 0.222977, 0, -3.55271e-15, 0, 0.222977, 2.98023e-08, 0, -2.98023e-08 )
+shape = SubResource( 4 )
+trigger = false
+_update_shape_index = 0
 
 [node name="Player" parent="." instance=ExtResource( 4 )]
 
-transform/local = Transform( 0.514702, 0, 0, 0, 0.514702, 0, 0, 0, 0.514702, 0, 8.22787, 0 )
+transform/local = Transform( 0.514702, 0, 0, 0, 0.514702, 0, 0, 0, 0.514702, 0, 1.64988, 0 )
+continuous_cd = true
+
+[node name="Camera" type="Camera" parent="."]
+
+_import_transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
+transform/local = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 7.10208, 17.5155 )
+projection = 0
+fov = 60.0
+near = 0.1
+far = 100.0
+keep_aspect = 1
+current = true
+visible_layers = 1048575
+environment = null
+h_offset = 0.0
+v_offset = 0.0
 
 
