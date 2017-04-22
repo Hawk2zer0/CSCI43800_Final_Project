@@ -14,11 +14,28 @@ var moveAngle = 0
 #Collision Boolean
 var isColliding = false
 
+const my_data = preload("Entity_Data.gd")
+onready var myStats = my_data.new()
+
 func _ready():
+	myStats.set_My_Vals(-1, 100, 15, 10, 15, 10)
 	self.set_process(true)
 	
 func _process(delta):
-	pass
+	# Check if hit every frame
+	if(myStats._hit > 0):
+		take_damage()
+	
+	if(Input.is_key_pressed(KEY_Z)):
+		myStats._attacking = true
+		
+# Funciton to decrement HP
+func take_damage(hit):
+	myStats.decrement_HP(hit)
+	print(myStats.get_cur_HP())
+	if(myStats.get_cur_HP() <= 0):
+		# Remove Self from Screen
+		pass
 	
 func _integrate_forces(state):
 	#reset rotation
@@ -114,7 +131,8 @@ func _integrate_forces(state):
 	
 	#check what we are colliding with
 	var collidingBodies = get_colliding_bodies()
-	print(collidingBodies)
+	#print(collidingBodies)
+	
 	for body in collidingBodies:
 		#we won't care about the map collision, as that is normal
 		if (body != Map):

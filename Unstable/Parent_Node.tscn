@@ -1,9 +1,11 @@
-[gd_scene load_steps=9 format=1]
+[gd_scene load_steps=11 format=1]
 
 [ext_resource path="res://Collision.gd" type="Script" id=1]
 [ext_resource path="res://ArenaA.msh" type="Mesh" id=2]
 [ext_resource path="res://BattleSceneUVin.tex" type="Texture" id=3]
 [ext_resource path="res://Player.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Enemy.tscn" type="PackedScene" id=5]
+[ext_resource path="res://enemy_Movement.gd" type="Script" id=6]
 
 [sub_resource type="PlaneShape" id=1]
 
@@ -235,5 +237,10 @@ visible_layers = 1048575
 environment = null
 h_offset = 0.0
 v_offset = 0.0
+
+[node name="Enemy" parent="." instance=ExtResource( 5 )]
+
+transform/local = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4.52984, 2.2566, 6.43567 )
+script/script = ExtResource( 6 )
 
 
