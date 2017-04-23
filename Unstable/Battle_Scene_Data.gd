@@ -3,6 +3,8 @@
 var arrBattleQueue = []
 # List of enemies
 var arrEnemyList = []
+#List of possible Enemy spawn areas
+var arrEnemySpawns = []
 # Timer used to check movement order
 var intCounter = 0
 
@@ -16,13 +18,14 @@ func _ready():
 	self.set_process(true)
 	# add player to this scene
 	var BattlePlayer = PlayerProto.instance()
+	BattlePlayer.get_node("TestCube/Camera").make_current()
 	BattlePlayer.set_name(player.get_name() + "-Battle")
 	BattlePlayer.set_translation(player.get_translation())
 	BattlePlayer.set_rotation(player.get_rotation())
 	add_child(BattlePlayer)
+	# need to do this before make enemies
+	arrEnemySpawns = get_node("./Map/EnemyAreas").get_children()
 	makeEnemies()
-	#print(arrEnemyList)
-	
 
 # called each frame
 func _process(delta):
@@ -34,8 +37,6 @@ func _process(delta):
 
 func makeEnemies():
 	var thisPlayer = get_node("./Player-Battle")
-	for child in thisPlayer.get_children():
-		print(child.get_name())
 	# get range from 0-2, then add one to make sure there is always an enemy
 	var enemyNum = randi() % 3 + 1
 	for i in range(enemyNum):
@@ -43,7 +44,9 @@ func makeEnemies():
 		var newEnemy = EnemyProto.instance()
 		# Move enemy to new Position
 		var playerPos = thisPlayer.get_translation()
-		newEnemy.set_translation(playerPos + Vector3(10.0 + (1 * i), 0.0, 10.0 + (-1 * i)))
+		
+		newEnemy.set_translation(arrEnemySpawns[i].get_translation())
+		#newEnemy.set_translation(playerPos + Vector3(10.0 + (1 * i), 0.0, 10.0 + (-1 * i)))
 		# Change enemy Name
 		newEnemy.set_name("Enemy-" + str(i))
 		# Add new enemy to list

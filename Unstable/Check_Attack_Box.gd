@@ -9,12 +9,12 @@ func _ready():
 	self.set_process(true)
 	
 func _process(delta):
-	var attackableBodies = get_overlapping_bodies()
-	var arrIgnoredBodies = []
-	
 	var scene = SceneManager.getCurrentScene()
 	# On scene switch, there will be 1 frame where scene is null
 	if(scene != null):
+		var attackableBodies = get_overlapping_bodies()
+		var arrIgnoredBodies = []
+		
 		var Map = scene.get_node("/root/" + scene.get_name() + "/Map")
 		arrIgnoredBodies.append(Map)
 		
