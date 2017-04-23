@@ -11,8 +11,8 @@ func _ready():
 func _process(delta):
 	var attackableBodies = get_overlapping_bodies()
 	var arrIgnoredBodies = []
-	var scene = get_tree().get_current_scene()
 	
+	var scene = SceneManager.getCurrentScene()
 	# On scene switch, there will be 1 frame where scene is null
 	if(scene != null):
 		var Map = scene.get_node("/root/" + scene.get_name() + "/Map")
@@ -21,6 +21,9 @@ func _process(delta):
 		# ignore all child object of Map i.e. D-pad, A-button, etc.
 		for child in Map.get_children():
 			arrIgnoredBodies.append(child)
+			if(child.get_child_count() > 0):
+				for subchild in child.get_children():
+					arrIgnoredBodies.append(subchild)
 		
 		# Dont collide with the attack box & dont collide with attacking entity
 		arrIgnoredBodies.append(self)
@@ -30,6 +33,7 @@ func _process(delta):
 			for body in attackableBodies:
 				# If the body is not in the ignore array
 				if(arrIgnoredBodies.find(body) == -1):
+					print(body.get_name())
 					# set the body's damage Taken value to This object's Attack Value
 					# Add defense considerations later.
 					# Get path to checked node, the set Hit value.

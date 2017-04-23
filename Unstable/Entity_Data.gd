@@ -49,6 +49,3 @@ func get_movement():
 func decrement_HP():
 	_cur_HP -= _hit
 	_hit = 0	
-	
-func set_active():
-	_active = true

@@ -1,10 +1,9 @@
-[gd_scene load_steps=11 format=1]
+[gd_scene load_steps=10 format=1]
 
 [ext_resource path="res://Parent_Node.gd" type="Script" id=1]
 [ext_resource path="res://GameWorldUV_in.tex" type="Texture" id=2]
 [ext_resource path="res://Player.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Enemy.tscn" type="PackedScene" id=4]
-[ext_resource path="res://enemy_Movement.gd" type="Script" id=5]
 
 [sub_resource type="PlaneShape" id=1]
 
@@ -324,9 +323,7 @@ v_offset = 0.0
 
 [node name="Enemy" parent="." instance=ExtResource( 4 )]
 
-transform/local = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 28.9183, 38.8773, -19.905 )
-mode = 2
-script/script = ExtResource( 5 )
+transform/local = Transform( 0.977519, 0, 0, 0, 0.977519, 0, 0, 0, 0.977519, 5.57157, 37.9274, -20.8175 )
 
 [node name="Dpad_HitBox" type="Node" parent="."]
 

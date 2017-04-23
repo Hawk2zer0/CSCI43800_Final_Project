@@ -35,3 +35,6 @@ func setSceneID(integer):
 	
 func getSceneID():
 	return sceneID
+	
+func getCurrentScene():
+	return currentScene
