@@ -141,6 +141,17 @@ texture/progress = ExtResource( 3 )
 radial_fill/fill_degrees = 360.0
 radial_fill/center_offset = Vector2( 0, 0 )
 
+[node name="Panel" type="Panel" parent="TestCube/Camera"]
+
+focus/ignore_mouse = false
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 2
+margin/left = 13.0
+margin/top = 426.0
+margin/right = 332.0
+margin/bottom = 584.0
+
 [node name="BodyBox" type="CollisionShape" parent="."]
 
 _import_transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
