@@ -73,6 +73,49 @@ environment = null
 h_offset = 0.0
 v_offset = 0.0
 
+[node name="Player_HP" type="Label" parent="TestCube/Camera"]
+
+focus/ignore_mouse = true
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 0
+margin/left = 8.0
+margin/top = 25.0
+margin/right = 82.0
+margin/bottom = 56.0
+valign = 1
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+
+[node name="Player_Atk_Spd" type="Label" parent="TestCube/Camera"]
+
+focus/ignore_mouse = true
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 0
+margin/left = 7.0
+margin/top = 53.0
+margin/right = 92.0
+margin/bottom = 84.0
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+
+[node name="Enemy_HP" type="Label" parent="TestCube/Camera"]
+
+focus/ignore_mouse = true
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 0
+margin/left = 908.0
+margin/top = 44.0
+margin/right = 1011.0
+margin/bottom = 402.0
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+
 [node name="BodyBox" type="CollisionShape" parent="."]
 
 _import_transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )

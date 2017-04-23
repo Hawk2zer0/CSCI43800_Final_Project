@@ -31,7 +31,11 @@ func _process(delta):
 	
 	if(Input.is_key_pressed(KEY_Z)):
 		myStats._attacking = true
+	
+	if(Input.is_key_pressed(KEY_O)):
+		take_damage(10);
 		
+	update_hud();
 # Funciton to decrement HP
 func take_damage(hit):
 	myStats.decrement_HP(hit)
@@ -39,6 +43,16 @@ func take_damage(hit):
 	if(myStats.get_cur_HP() <= 0):
 		# Remove Self from Screen
 		pass
+
+func update_hud():
+	# Player HP label update
+	get_node("TestCube/Camera/Player_HP").set_text(str(myStats.get_cur_HP()));
+	
+	# Player Attack Speed label update
+	get_node("TestCube/Camera/Player_Atk_Spd").set_text(str(myStats.get_speed()));
+
+	# Enemy HP label update
+	get_node("TestCube/Camera/Enemy_HP").set_text("Testing Enemy HP Value set.");
 	
 func _integrate_forces(state):
 	#reset rotation
