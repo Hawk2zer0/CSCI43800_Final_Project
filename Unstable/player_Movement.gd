@@ -5,8 +5,10 @@ extends RigidBody
 var MoveSpeed = 5.0
 var RotationDisplacement = PI/90
 var jumpHeight = 12
+
 var onFloor = false
 var jumping = false
+var landingFlag = false
 #Demo Walkthrough
 var last_rotation = Vector3()
 
@@ -58,28 +60,37 @@ func _integrate_forces(state):
 	#Let's map our inputs 
 	#forward
 	if(Input.is_key_pressed(KEY_W)):
-		if(!isColliding):
-			var xDelta = (MoveSpeed) * sin(moveAngle)
-			var zDelta = (MoveSpeed) * cos(moveAngle)
-			
-			direction.x = xDelta
-			direction.z = zDelta
+		if(!landingFlag):
+			if(!isColliding):
+				var xDelta = (MoveSpeed) * sin(moveAngle)
+				var zDelta = (MoveSpeed) * cos(moveAngle)
+				
+				direction.x = xDelta
+				direction.z = zDelta
+				
+		else:
+			landingFlag = false
 	
 	#backward	
 	if(Input.is_key_pressed(KEY_S)):
-		if(!isColliding):
-			var xDelta = (MoveSpeed) * sin(moveAngle)
-			var zDelta = (MoveSpeed) * cos(moveAngle)
-			
-			
-			direction.x = -xDelta
-			direction.z = -zDelta
+		if(!landingFlag):
+			if(!isColliding):
+				var xDelta = (MoveSpeed) * sin(moveAngle)
+				var zDelta = (MoveSpeed) * cos(moveAngle)
+				
+				
+				direction.x = -xDelta
+				direction.z = -zDelta
 		
+		else:
+			landingFlag = false
+			
 	#Jump
 	if(Input.is_key_pressed(KEY_SPACE)):
 		if(onFloor and !jumping):
 			yVelocity = jumpHeight
 			onFloor = false
+			jumping = true
 			
 	if(Input.is_key_pressed(KEY_A)):
 		var playerLoc = get_transform()
@@ -183,6 +194,7 @@ func _integrate_forces(state):
 				onFloor = true
 				if(jumping):
 					jumping = false
+					landingFlag = true
 	
 	var target_direction = (direction - up*direction.dot(up))
 	
