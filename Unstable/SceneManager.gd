@@ -13,7 +13,7 @@ var sceneID = 1
 func _ready():
 	# Called every time the node is added to the scene.
 	# Initialization here
-	currentScene = get_tree().get_root().get_child(get_tree().get_root().get_child_count() -1)
+	currentScene = get_tree().get_root().get_child(get_tree().get_root().get_child_count() - 1)
 	
 func setScene(scene,integer):
 	#clean our current Scene
