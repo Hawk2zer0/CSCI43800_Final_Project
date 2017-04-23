@@ -1,4 +1,4 @@
-# Variable needed by All Entities
+# Variable needed by ALL Entities
 var _type = 0 # Type Flag: -1:player ; 0:static Enemy ; 1:Melee enemy ; 2:Flying enemy
 var _max_HP = 100 
 var _cur_HP = 100
