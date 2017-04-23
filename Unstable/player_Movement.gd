@@ -25,24 +25,28 @@ func _ready():
 	self.set_process(true)
 	
 func _process(delta):
-	# Check if hit every frame
-	if(myStats._hit > 0):
-		take_damage()
+	pass
 	
 	if(Input.is_key_pressed(KEY_Z)):
 		myStats._attacking = true
 	
 	if(Input.is_key_pressed(KEY_O)):
-		take_damage(10);
+		set_hit(10);
 		
 	update_hud();
+	
 # Funciton to decrement HP
-func take_damage(hit):
-	myStats.decrement_HP(hit)
+func take_damage():
+	myStats.decrement_HP()
 	print(myStats.get_cur_HP())
 	if(myStats.get_cur_HP() <= 0):
 		# Remove Self from Screen
 		pass
+		
+func set_hit(intEnemyAttackAmt):
+	myStats._hit = intEnemyAttackAmt
+	# can asses Defense stuff here
+	take_damage()
 
 func update_hud():
 	# Player HP label update

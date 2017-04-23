@@ -46,8 +46,9 @@ func get_speed():
 func get_movement():
 	return _movement
 	
-func decrement_HP(_hit):
+func decrement_HP():
 	_cur_HP -= _hit
 	_hit = 0	
+	
 func set_active():
 	_active = true
