@@ -117,10 +117,11 @@ func _integrate_forces(state):
 			
 	#Jump
 	if(Input.is_key_pressed(KEY_SPACE)):
-		if(onFloor and !jumping):
-			yVelocity = jumpHeight
-			onFloor = false
-			jumping = true
+		if(get_node("/root/SceneManager").getSceneID() == 1):
+			if(onFloor and !jumping):
+				yVelocity = jumpHeight
+				onFloor = false
+				jumping = true
 			
 	if(Input.is_key_pressed(KEY_A)):
 		var playerLoc = get_transform()
