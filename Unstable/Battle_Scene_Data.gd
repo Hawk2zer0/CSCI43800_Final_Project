@@ -16,6 +16,7 @@ func _ready():
 	self.set_process(true)
 	# add player to this scene
 	var BattlePlayer = PlayerProto.instance()
+	BattlePlayer.get_node("TestCube/Camera").make_current()
 	BattlePlayer.set_name(player.get_name() + "-Battle")
 	BattlePlayer.set_translation(player.get_translation())
 	BattlePlayer.set_rotation(player.get_rotation())
