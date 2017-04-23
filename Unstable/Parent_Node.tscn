@@ -146,30 +146,6 @@ shadow/max_distance = 0.0
 shadow/split_weight = 0.5
 shadow/zoffset_scale = 2.0
 
-[node name="DirectionalLight3" type="DirectionalLight" parent="Lighting"]
-
-_import_transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
-transform/local = Transform( -0.78252, -0.255075, 0.567979, 0.61831, -0.211143, 0.757041, -0.0731772, 0.943587, 0.322939, -36.3606, -19.7704, -1.15237 )
-layers = 1
-params/enabled = true
-params/editor_only = false
-params/bake_mode = 0
-params/energy = 0.375
-colors/diffuse = Color( 1, 1, 1, 1 )
-colors/specular = Color( 1, 1, 1, 1 )
-shadow/shadow = false
-shadow/darkening = 0.0
-shadow/z_offset = 0.05
-shadow/z_slope_scale = 0.0
-shadow/esm_multiplier = 60.0
-shadow/blur_passes = 1.0
-projector = null
-operator = 0
-shadow/mode = 1
-shadow/max_distance = 0.0
-shadow/split_weight = 0.5
-shadow/zoffset_scale = 2.0
-
 [node name="Map" type="RigidBody" parent="."]
 
 _import_transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
