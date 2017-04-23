@@ -4,13 +4,16 @@ var _max_HP = 100
 var _cur_HP = 100
 var _attack = 10
 var _defense = 10
-# How fast the bar fills
+# How What the battle bar will have to reach before you can attack.
+# it is updated every frame, so make this a multiple of 60
 var _speed = 10
 # how far the entity can move
 var _movement = 10
 # Amount of damage Taken
 var _hit = 0
 var _attacking = false
+# Is active -> used for BattleScene
+var _active = false
 
 func set_My_Vals(type, HP, atk, def, spd, mov):
 	_type = type
@@ -20,6 +23,7 @@ func set_My_Vals(type, HP, atk, def, spd, mov):
 	_defense = def
 	_speed = spd
 	_movement = mov
+	_active = false
 	
 func get_type():
 	return _type
@@ -45,3 +49,6 @@ func get_movement():
 func decrement_HP():
 	_cur_HP -= _hit
 	_hit = 0
+	
+func set_active():
+	_active = true

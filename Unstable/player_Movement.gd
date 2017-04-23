@@ -16,6 +16,7 @@ var moveAngle = 0
 #Collision Boolean
 var isColliding = false
 
+# instacne of data class
 const my_data = preload("Entity_Data.gd")
 onready var myStats = my_data.new()
 
@@ -146,7 +147,7 @@ func _integrate_forces(state):
 		set_transform(Transform(thisRotation,playerLoc.origin))	
 		
 	#Collision Detection and handling
-	var Map= get_node("/root/Parent_Node/Map")
+	var Map = get_node("/root/Parent_Node/Map")
 	
 	#check what we are colliding with
 	var collidingBodies = get_colliding_bodies()

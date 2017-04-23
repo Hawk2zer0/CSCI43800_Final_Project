@@ -13,7 +13,10 @@ var EnemyProto = load("res://Enemy.tscn")
 # Called when scene is ready
 func _ready():
 	self.set_process(true)
-	populateEnemyList()
+	# add player to this scene
+	add_child(player)
+	makeEnemies()
+	
 
 # called each frame
 func _process(delta):
@@ -22,7 +25,7 @@ func _process(delta):
 	UpdateQueue()
 	CheckQueue()
 
-func populateEnemyList():
+func makeEnemies():
 	# get range from 0-2, then add one to make sure there is always an enemy
 	var enemyNum = randi() % 3 + 1
 	for i in range(enemyNum):
@@ -53,3 +56,4 @@ func UpdateQueue():
 func CheckQueue():
 	if(arrBattleQueue.size() > 0):
 		# Do attack dialog stuff
+		print(arrBattleQueue[0])

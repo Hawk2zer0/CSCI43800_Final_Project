@@ -22,9 +22,7 @@ func _ready():
 	self.set_process(true)
 	
 func _process(delta):
-	# Check if hit every frame
-	if(myStats._hit > 0):
-		take_damage()
+	pass
 		
 # Funciton to decrement HP
 func take_damage():
@@ -33,6 +31,11 @@ func take_damage():
 	if(myStats.get_cur_HP() <= 0):
 		# DIE & remove self from scene
 		pass
+		
+func set_hit(intEnemyAttackAmt):
+	myStats._hit = intEnemyAttackAmt
+	# can asses Defense stuff here
+	take_damage()
 	
 func _integrate_forces(state):
 	#reset rotation
