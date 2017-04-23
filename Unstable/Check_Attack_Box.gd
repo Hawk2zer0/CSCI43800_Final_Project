@@ -14,9 +14,11 @@ func _process(delta):
 	var Map = get_node("/root/Parent_Node/Map")
 	arrIgnoredBodies.append(Map)
 	
+	# ignore all child object of Map i.e. D-pad, A-button, etc.
 	for child in Map.get_children():
 		arrIgnoredBodies.append(child)
 	
+	# Dont collide with the attack box & dont collide with attacking entity
 	arrIgnoredBodies.append(self)
 	arrIgnoredBodies.append(self.get_parent())
 	
@@ -28,5 +30,5 @@ func _process(delta):
 				# set the body's damage Taken value to This object's Attack Value
 				# Add defense considerations later.
 				# Get path to checked node, the set Hit value.
-				get_node(body.get_path()).myStats._hit = self.get_parent().myStats.get_attack()
+				get_node(body.get_path()).set_hit(self.get_parent().myStats.get_attack())
 		self.get_parent().myStats._attacking = false
