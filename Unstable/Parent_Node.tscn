@@ -21,7 +21,7 @@ surfaces/0 = {
 }
 custom_aabb/custom_aabb = AABB( 0, 0, 0, 0, 0, 0 )
 
-[sub_resource type="FixedMaterial" id=5]
+[sub_resource type="FixedMaterial" id=3]
 
 flags/visible = true
 flags/double_sided = false
@@ -59,11 +59,11 @@ textures/glow_tc = 0
 textures/normal_tc = 0
 textures/shade_param_tc = 0
 
-[sub_resource type="BoxShape" id=3]
+[sub_resource type="BoxShape" id=4]
 
 extents = Vector3( 1, 1, 1 )
 
-[sub_resource type="BoxShape" id=4]
+[sub_resource type="BoxShape" id=5]
 
 extents = Vector3( 1, 1, 1 )
 
@@ -201,7 +201,7 @@ damp_override/angular = -1.0
 [node name="Arena" type="MeshInstance" parent="Map"]
 
 _import_transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
-transform/local = Transform( 4.85466, 0, 0, 0, 4.85466, 0, 0, 0, 4.85466, 0, 1.0345, -0.805691 )
+transform/local = Transform( 4.85466, 0, -2.84217e-14, 0, 4.85466, 0, 2.84217e-14, 0, 4.85466, -0.00703784, 1.02308, -0.804535 )
 layers = 1
 geometry/visible = true
 geometry/material_override = null
@@ -218,7 +218,7 @@ geometry/use_baked_light = false
 geometry/baked_light_tex_id = 0
 mesh/mesh = SubResource( 2 )
 mesh/skeleton = NodePath("..")
-material/0 = SubResource( 5 )
+material/0 = SubResource( 3 )
 
 [node name="Map_Floor" type="CollisionShape" parent="Map"]
 
@@ -235,7 +235,7 @@ transform/local = Transform( 9.20569, 0, -5.68434e-14, 0, 10.858, 0, 5.68434e-14
 input/ray_pickable = true
 input/capture_on_drag = false
 shape_count = 1
-shapes/0/shape = SubResource( 3 )
+shapes/0/shape = SubResource( 4 )
 shapes/0/transform = Transform( 0.221222, 0, 1.77636e-15, 0, 0.221222, 0, -1.77636e-15, 0, 0.221222, 0, 0, 0 )
 shapes/0/trigger = false
 collision/layers = 1
@@ -261,7 +261,7 @@ damp_override/angular = -1.0
 
 _import_transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
 transform/local = Transform( 0.221222, 0, 1.77636e-15, 0, 0.221222, 0, -1.77636e-15, 0, 0.221222, 0, 0, 0 )
-shape = SubResource( 3 )
+shape = SubResource( 4 )
 trigger = false
 _update_shape_index = 0
 
@@ -272,7 +272,7 @@ transform/local = Transform( 8.64903, 0, 0, 0, 10.2014, 0, 0, 0, 8.64903, 6.2468
 input/ray_pickable = true
 input/capture_on_drag = false
 shape_count = 1
-shapes/0/shape = SubResource( 4 )
+shapes/0/shape = SubResource( 5 )
 shapes/0/transform = Transform( 0.222977, 0, 3.55271e-15, 0, 0.222977, 0, -3.55271e-15, 0, 0.222977, 2.98023e-08, 0, -2.98023e-08 )
 shapes/0/trigger = false
 collision/layers = 1
@@ -298,7 +298,7 @@ damp_override/angular = -1.0
 
 _import_transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
 transform/local = Transform( 0.222977, 0, 3.55271e-15, 0, 0.222977, 0, -3.55271e-15, 0, 0.222977, 2.98023e-08, 0, -2.98023e-08 )
-shape = SubResource( 4 )
+shape = SubResource( 5 )
 trigger = false
 _update_shape_index = 0
 
@@ -325,6 +325,7 @@ v_offset = 0.0
 [node name="Enemy" parent="." instance=ExtResource( 4 )]
 
 transform/local = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 58.3553, 40.883, -5.14212 )
+mode = 2
 script/script = ExtResource( 5 )
 
 [node name="Dpad_HitBox" type="Node" parent="."]

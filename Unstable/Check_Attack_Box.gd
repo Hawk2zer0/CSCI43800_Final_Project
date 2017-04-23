@@ -1,12 +1,11 @@
-extends Area
+# This script will alwasy be attached to an Area Node, which will be a direct child of The Body attacking.
 
-# class member variables go here, for example:
-# var a = 2
-# var b = "textvar"
+# gets the physics type and all that
+extends Area
 
 func _ready():
 	# Called every time the node is added to the scene.
-	# Initialization here
+	# set _process to be called each frame
 	self.set_process(true)
 	
 func _process(delta):
@@ -27,5 +26,7 @@ func _process(delta):
 			# If the body is not in the ignore array
 			if(arrIgnoredBodies.find(body) == -1):
 				# set the body's damage Taken value to This object's Attack Value
+				# Add defense considerations later.
+				# Get path to checked node, the set Hit value.
 				get_node(body.get_path()).myStats._hit = self.get_parent().myStats.get_attack()
 		self.get_parent().myStats._attacking = false

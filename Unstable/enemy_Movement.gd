@@ -12,6 +12,8 @@ var moveAngle = 0
 #Collision Boolean
 var isColliding = false
 
+# instance of Entity data class.
+# figure out inheritance??
 const my_data = preload("Entity_Data.gd")
 onready var myStats = my_data.new()
 
@@ -29,7 +31,7 @@ func take_damage():
 	myStats.decrement_HP()
 	print(myStats.get_cur_HP())
 	if(myStats.get_cur_HP() <= 0):
-		# Remove Self from Screen
+		# DIE & remove self from scene
 		pass
 	
 func _integrate_forces(state):
@@ -57,8 +59,9 @@ func _integrate_forces(state):
 		-> ACTUALLY MOVE
 	"""
 	
+	# Might not need all this stuff?
 	
-		#Collision Detection and handling
+	#Collision Detection and handling
 	var Map= get_node("/root/Parent_Node/Map")
 	
 	#check what we are colliding with

@@ -2,7 +2,7 @@
 extends RigidBody
 
 #Macros for various speed and rotational items
-var MoveSpeed = 5.0
+var MoveSpeed = 10.0
 var RotationDisplacement = PI/90
 var jumpHeight = 12
 var onFloor = false
@@ -41,6 +41,8 @@ func _integrate_forces(state):
 	#reset rotation
 	set_rotation(last_rotation)
 	
+	# Check keys & Update position/rotation
+	
 	# we only care about movement if keys are pressed that respond to movement
 	var lv = state.get_linear_velocity() #Entity Linear Velocity
 	var delta = state.get_step() #Frame Rate
@@ -55,6 +57,12 @@ func _integrate_forces(state):
 	
 	var direction = Vector3() #Where does the player intend to walk to
 	
+	# Reset movespeed every frame to allow for running
+	MoveSpeed = 10.0
+	
+	# Check for runnung.
+	if(Input.is_key_pressed(KEY_SHIFT)):
+		MoveSpeed = 20.0
 	#Let's map our inputs 
 	#forward
 	if(Input.is_key_pressed(KEY_W)):
