@@ -31,7 +31,7 @@ func _process(delta):
 		myStats._attacking = true
 	
 	if(Input.is_key_pressed(KEY_O)):
-		set_hit(10);
+		set_hit(1);
 		
 	update_hud();
 	
@@ -53,13 +53,15 @@ func set_active():
 
 func update_hud():
 	# Player HP label update
-	get_node("TestCube/Camera/Player_HP").set_text(str(myStats.get_cur_HP()));
+	get_node("TestCube/Camera/Player_HP_Bar").set_value(float(myStats.get_cur_HP()))
+	get_node("TestCube/Camera/Player_HP").set_text(str(myStats.get_cur_HP()))
+	
 	
 	# Player Attack Speed label update
-	get_node("TestCube/Camera/Player_Atk_Spd").set_text(str(myStats.get_speed()));
+	get_node("TestCube/Camera/Player_Atk_Spd").set_text(str(myStats.get_speed()))
 
 	# Enemy HP label update
-	get_node("TestCube/Camera/Enemy_HP").set_text("Testing Enemy HP Value set.");
+	get_node("TestCube/Camera/Enemy_HP").set_text("Testing Enemy HP Value set.")
 	
 func _integrate_forces(state):
 	#reset rotation
