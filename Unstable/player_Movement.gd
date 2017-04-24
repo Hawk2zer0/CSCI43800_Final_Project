@@ -61,7 +61,11 @@ func update_hud():
 	get_node("TestCube/Camera/Player_Atk_Spd").set_text(str(myStats.get_speed()))
 
 	# Enemy HP label update
-	get_node("TestCube/Camera/Enemy_HP").set_text("Testing Enemy HP Value set.")
+	if(get_node("/root/SceneManager").getSceneID() > 1):
+		get_node("TestCube/Camera/Enemy_HP_Bar1").show()
+		get_node("TestCube/Camera/Enemy_HP").set_text("Enemy 1")
+		#get_parent().get_node("Enemy").get_cur_HP()
+		
 	
 func _integrate_forces(state):
 	#reset rotation
