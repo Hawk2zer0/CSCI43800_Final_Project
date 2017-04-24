@@ -7,6 +7,8 @@ var arrEnemyList = []
 var arrEnemySpawns = []
 # Timer used to check movement order
 var intCounter = 0
+# Bool to track if an action has been taken
+var boolWasActive = false
 
 # Get player instance & Enemy to copy
 onready var player = get_node("/root/Parent_Node/Player")
@@ -28,6 +30,7 @@ func _ready():
 	# need to do this before make enemies
 	arrEnemySpawns = get_node("./Map/EnemyAreas").get_children()
 	makeEnemies()
+	#get_node("./Map/MoveRadius").Set_Player()
 
 # called each frame
 func _process(delta):
@@ -61,17 +64,33 @@ func UpdateQueue():
 	var thisPlayer = get_node("./Player-Battle")
 	# always check player speed 1st. (Change for difficulty??)
 	if(intCounter % thisPlayer.myStats.get_speed() == 0):
-		arrBattleQueue.append(thisPlayer)
+		if(arrBattleQueue.size() < 10):
+			arrBattleQueue.append(thisPlayer)
 	
 	#print(arrEnemyList)
 	# check each enemy's speed
 	for enemy in arrEnemyList:
 		# if counter if even multiple of character speed,
 		if(intCounter % enemy.myStats.get_speed() == 0):
-			arrBattleQueue.append(enemy)
+			if(arrBattleQueue.size() < 10):
+				arrBattleQueue.append(enemy)
 			
 # checks to see if anyone is ready to attack
 func CheckQueue():
 	if(arrBattleQueue.size() > 0):
-		# Do attack dialog stuff
-		arrBattleQueue[0].set_active()
+		# If the 1st element is not active
+		if(!arrBattleQueue[0].myStats._active):
+			# if the 1st element WAS active
+			if(boolWasActive):
+				arrBattleQueue.pop_front()
+				boolWasActive = false
+				# move Area After turn
+				get_node("./Map/MoveRadius").Set_Origin(get_node("./Map"))
+			# if this is the 1st time the element is being made active
+			else:
+				# Do attack dialog stuff
+				arrBattleQueue[0].set_active()
+				boolWasActive = true
+				arrBattleQueue[0].set_origin(arrBattleQueue[0].get_translation())
+				get_node("./Map/MoveRadius").Set_Origin(arrBattleQueue[0])
+				get_node("./Map/MoveRadius/CollisionShape").get_shape().set_radius(arrBattleQueue[0].myStats.get_movement())

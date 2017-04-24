@@ -8,7 +8,8 @@ var _defense = 10
 # it is updated every frame, so make this a multiple of 60
 var _speed = 10
 # how far the entity can move
-var _movement = 10
+# Good Values between 2 & 4
+var _movement = 2.5
 # Amount of damage Taken
 var _hit = 0
 var _attacking = false

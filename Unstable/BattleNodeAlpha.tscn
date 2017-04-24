@@ -1,7 +1,8 @@
-[gd_scene load_steps=10 format=1]
+[gd_scene load_steps=12 format=1]
 
 [ext_resource path="res://Battle_Scene_Data.gd" type="Script" id=1]
 [ext_resource path="res://GameWorldUV_in.tex" type="Texture" id=2]
+[ext_resource path="res://Move_Radius.gd" type="Script" id=3]
 
 [sub_resource type="PlaneShape" id=1]
 
@@ -72,6 +73,11 @@ extents = Vector3( 1, 1, 1 )
 
 extents = Vector3( 1, 1, 1 )
 
+[sub_resource type="CapsuleShape" id=8]
+
+radius = 2.5
+height = 1.0
+
 [node name="BattleNode" type="Node"]
 
 script/script = ExtResource( 1 )
@@ -137,6 +143,7 @@ _update_shape_index = 0
 
 [node name="WallA" type="StaticBody" parent="Map"]
 
+editor/display_folded = true
 _import_transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
 transform/local = Transform( -6.43048e-08, 0, 29.4223, 0, 41.1912, 0, -1.47112, 0, -1.2861e-06, -4.33094, 13.9377, 6.73856 )
 input/ray_pickable = true
@@ -162,6 +169,7 @@ _update_shape_index = 0
 
 [node name="WallB" type="StaticBody" parent="Map"]
 
+editor/display_folded = true
 _import_transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
 transform/local = Transform( -6.43048e-08, 0, 29.4223, 0, 41.1912, 0, -1.47112, 0, -1.2861e-06, -4.33094, 13.9377, -8.7023 )
 input/ray_pickable = true
@@ -187,6 +195,7 @@ _update_shape_index = 0
 
 [node name="WallC" type="StaticBody" parent="Map"]
 
+editor/display_folded = true
 _import_transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
 transform/local = Transform( 1.47112, 0, 9.32232e-12, 0, 41.1912, 0, -2.55795e-13, 0, 52.9602, -9.41094, 13.9377, -0.402538 )
 input/ray_pickable = true
@@ -212,6 +221,7 @@ _update_shape_index = 0
 
 [node name="WallD" type="StaticBody" parent="Map"]
 
+editor/display_folded = true
 _import_transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
 transform/local = Transform( 1.47112, 0, 9.32232e-12, 0, 41.1912, 0, -2.55795e-13, 0, 52.9602, 1.24048, 13.9377, -0.402539 )
 input/ray_pickable = true
@@ -313,6 +323,8 @@ shadow/zoffset_scale = 2.0
 
 [node name="EnemyAreas" type="Node" parent="Map"]
 
+editor/display_folded = true
+
 [node name="Area" type="Area" parent="Map/EnemyAreas"]
 
 _import_transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
@@ -372,5 +384,36 @@ monitoring = true
 monitorable = true
 collision/layers = 1
 collision/mask = 1
+
+[node name="MoveRadius" type="Area" parent="Map"]
+
+_import_transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
+transform/local = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, -9.04519, 18.2145, 3.95379e-07 )
+input/ray_pickable = false
+input/capture_on_drag = false
+shape_count = 1
+shapes/0/shape = SubResource( 8 )
+shapes/0/transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
+shapes/0/trigger = false
+space_override = 0
+gravity_point = false
+gravity_distance_scale = 0.0
+gravity_vec = Vector3( 0, -1, 0 )
+gravity = 9.8
+linear_damp = 0.1
+angular_damp = 1.0
+priority = 0.0
+monitoring = true
+monitorable = true
+collision/layers = 1
+collision/mask = 1
+script/script = ExtResource( 3 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Map/MoveRadius"]
+
+_import_transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
+shape = SubResource( 8 )
+trigger = false
+_update_shape_index = 0
 
 

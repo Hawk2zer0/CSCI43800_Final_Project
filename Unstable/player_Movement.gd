@@ -16,22 +16,19 @@ var moveAngle = 0
 #Collision Boolean
 var isColliding = false
 
+# Origin for Battle
+var OriginOfMove
+
 # instacne of data class
 const my_data = preload("Entity_Data.gd")
 onready var myStats = my_data.new()
 
 func _ready():
-	myStats.set_My_Vals(-1, 100, 15, 10, 15, 10)
+	myStats.set_My_Vals(-1, 100, 15, 10, 15, 3)
 	self.set_process(true)
 	
 func _process(delta):
 	pass
-	
-	if(Input.is_key_pressed(KEY_Z)):
-		myStats._attacking = true
-	
-	if(Input.is_key_pressed(KEY_O)):
-		set_hit(1);
 		
 	update_hud();
 	
@@ -40,7 +37,7 @@ func take_damage():
 	myStats.decrement_HP()
 	print(myStats.get_cur_HP())
 	if(myStats.get_cur_HP() <= 0):
-		# Remove Self from Screen
+		# DIE -> Game over scene?
 		pass
 		
 func set_hit(intEnemyAttackAmt):
@@ -50,6 +47,9 @@ func set_hit(intEnemyAttackAmt):
 	
 func set_active():
 	myStats._active = true
+	
+func set_origin(vecOriginalPos):
+	OriginOfMove = vecOriginalPos
 
 func update_hud():
 	# Player HP label update
@@ -65,8 +65,33 @@ func update_hud():
 	
 func _integrate_forces(state):
 	#reset rotation
+	# Required Every Frame
 	set_rotation(last_rotation)
 	
+	if(get_node("/root/SceneManager").getSceneID() == 1):
+		CheckKeys(state)
+	if(get_node("/root/SceneManager").getSceneID() == 2):
+		if(myStats._active):
+			CheckKeys(state)
+			if(TakeAction()):
+				myStats._active = false
+				
+func TakeAction():
+	# Attack
+	if(Input.is_key_pressed(KEY_Z)):
+		myStats._attacking = true
+		return true
+	# TEMP: Take damage
+	elif(Input.is_key_pressed(KEY_O)):
+		set_hit(10);
+		return true
+	# Pass
+	elif(Input.is_key_pressed(KEY_P)):
+		return true
+	else:
+		return false
+
+func CheckKeys(state):
 	# Check keys & Update position/rotation
 	
 	# we only care about movement if keys are pressed that respond to movement
@@ -193,8 +218,8 @@ func _integrate_forces(state):
 				
 				if((playerPosition.y < objectTop)):
 					isColliding = true
-									
-					#calculate and apply collision pushback				
+					
+					#calculate and apply collision pushback
 					var oppositeLength = abs(collidingObjectPosition.x - playerPosition.x)
 					var adjacentLength = abs(collidingObjectPosition.z - playerPosition.z)
 					
@@ -232,11 +257,34 @@ func _integrate_forces(state):
 					if(jumping):
 						jumping = false
 						landingFlag = true
-		
+						
 	var target_direction = (direction - up*direction.dot(up))
 	
 	lv = target_direction + up*yVelocity
 	
 	state.set_linear_velocity(lv)
 	
-	last_rotation = get_rotation()	
+	last_rotation = get_rotation()
+
+# Pushes in opposite directon of movement.
+# only kinda works.... 
+func Push_Back():
+	var oppositeLength = abs(get_translation().z - OriginOfMove.z)
+	var adjacentLength = abs(get_translation().x - OriginOfMove.x)
+	
+	var MoveAngle = atan(oppositeLength/adjacentLength)
+	
+	var pushAngle = MoveAngle + PI
+	
+	#change to while loops??
+	if(MoveAngle > (2*PI)):
+		MoveAngle -= (2*PI)
+	elif(MoveAngle < 0):
+		MoveAngle += (2*PI)
+	
+	var xPush = cos(pushAngle)
+	var zPush = sin(pushAngle)
+	
+	var pushVec = Vector3(xPush, 0, zPush) * 5
+	
+	set_translation(get_translation() + pushVec)

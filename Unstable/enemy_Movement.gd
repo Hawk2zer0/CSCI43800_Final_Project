@@ -11,6 +11,8 @@ var last_rotation = Vector3()
 var moveAngle = 0
 #Collision Boolean
 var isColliding = false
+# Origin for Battle
+var OriginOfMove
 
 # instance of Entity data class.
 # figure out inheritance??
@@ -18,7 +20,7 @@ const my_data = preload("Entity_Data.gd")
 onready var myStats = my_data.new()
 
 func _ready():
-	myStats.set_My_Vals(0, 50, 10, 5, 10, 15)
+	myStats.set_My_Vals(0, 50, 10, 5, 10, 2.5)
 	self.set_process(true)
 	
 func _process(delta):
@@ -40,7 +42,18 @@ func set_hit(intEnemyAttackAmt):
 	# can asses Defense stuff here
 	take_damage()
 	
+func set_origin(vecOriginalPos):
+	OriginOfMove = vecOriginalPos
+	
 func _integrate_forces(state):
+	if(get_node("/root/SceneManager").getSceneID() == 1):
+		MakeMove(state)
+	if(get_node("/root/SceneManager").getSceneID() == 2):
+		if(myStats._active):
+			if(myStats.get_type() == 0):
+				myStats._active = false
+	
+func MakeMove(state):
 	#reset rotation
 	set_rotation(last_rotation)
 	
