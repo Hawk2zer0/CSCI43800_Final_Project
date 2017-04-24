@@ -43,6 +43,7 @@ func _process(delta):
 func makeEnemies():
 	var thisPlayer = get_node("./Player-Battle")
 	# get range from 0-2, then add one to make sure there is always an enemy
+	randomize()
 	var enemyNum = randi() % 3 + 1
 	for i in range(enemyNum):
 		# Make new instance of Enemy
@@ -74,6 +75,9 @@ func UpdateQueue():
 		if(intCounter % enemy.myStats.get_speed() == 0):
 			if(arrBattleQueue.size() < 10):
 				arrBattleQueue.append(enemy)
+			else:
+				# reset intCounter when queue is full to avoid overflow errors.
+				intCounter = 0
 			
 # checks to see if anyone is ready to attack
 func CheckQueue():
