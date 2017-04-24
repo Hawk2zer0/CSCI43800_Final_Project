@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=1]
+[gd_scene load_steps=13 format=1]
 
 [ext_resource path="res://Parent_Node.gd" type="Script" id=1]
 [ext_resource path="res://GameWorldUV_in.tex" type="Texture" id=2]
@@ -63,6 +63,18 @@ textures/shade_param_tc = 0
 extents = Vector3( 1, 1, 1 )
 
 [sub_resource type="BoxShape" id=5]
+
+extents = Vector3( 1, 1, 1 )
+
+[sub_resource type="BoxShape" id=7]
+
+extents = Vector3( 1, 1, 1 )
+
+[sub_resource type="BoxShape" id=6]
+
+extents = Vector3( 1, 1, 1 )
+
+[sub_resource type="BoxShape" id=8]
 
 extents = Vector3( 1, 1, 1 )
 
@@ -207,8 +219,9 @@ _update_shape_index = 0
 
 [node name="A_Button_Body" type="RigidBody" parent="Map"]
 
+editor/display_folded = true
 _import_transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
-transform/local = Transform( 9.20569, 0, -4.54747e-13, 0, 4, 0, 4.54747e-13, 0, 9.20569, 6.08679, 10.5554, -13.0956 )
+transform/local = Transform( 9.20569, 0, -1.08002e-12, 0, 2, 0, 1.08002e-12, 0, 9.20569, 6.08679, 11.0153, -13.0956 )
 input/ray_pickable = true
 input/capture_on_drag = false
 shape_count = 1
@@ -244,8 +257,9 @@ _update_shape_index = 0
 
 [node name="B_Button_Body" type="RigidBody" parent="Map"]
 
+editor/display_folded = true
 _import_transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
-transform/local = Transform( 8.64903, 0, 0, 0, 4, 0, 0, 0, 8.64903, 6.24686, 10.5617, -18.7877 )
+transform/local = Transform( 8.64903, 0, 0, 0, 2, 0, 0, 0, 8.64903, 6.24686, 10.9986, -18.7877 )
 input/ray_pickable = true
 input/capture_on_drag = false
 shape_count = 1
@@ -279,6 +293,308 @@ shape = SubResource( 5 )
 trigger = false
 _update_shape_index = 0
 
+[node name="SelectStart_Box_Top" type="RigidBody" parent="Map"]
+
+editor/display_folded = true
+_import_transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
+transform/local = Transform( 1.1, 0, -7.04858e-12, 0, 1.25, 0, 2.77112e-13, 0, 28.625, 3.82435, 10.8696, -1.02087 )
+input/ray_pickable = true
+input/capture_on_drag = false
+shape_count = 1
+shapes/0/shape = SubResource( 7 )
+shapes/0/transform = Transform( 0.218426, 0, -2.84217e-14, 0, 0.218426, 0, 8.32667e-17, 0, 0.218426, 0, 0, 0 )
+shapes/0/trigger = false
+collision/layers = 1
+collision/mask = 1
+mode = 1
+mass = 1.0
+friction = 1.0
+bounce = 0.0
+gravity_scale = 1.0
+custom_integrator = false
+continuous_cd = false
+contacts_reported = 0
+contact_monitor = false
+sleeping = false
+can_sleep = true
+axis_lock = 0
+velocity/linear = Vector3( 0, 0, 0 )
+velocity/angular = Vector3( 0, 0, 0 )
+damp_override/linear = -1.0
+damp_override/angular = -1.0
+
+[node name="CollisionShape" type="CollisionShape" parent="Map/SelectStart_Box_Top"]
+
+_import_transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
+transform/local = Transform( 0.218426, 0, -2.84217e-14, 0, 0.218426, 0, 8.32667e-17, 0, 0.218426, 0, 0, 0 )
+shape = SubResource( 7 )
+trigger = false
+_update_shape_index = 0
+
+[node name="SelectStart_Box_Bottom" type="RigidBody" parent="Map"]
+
+editor/display_folded = true
+_import_transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
+transform/local = Transform( 1.1, 0, -7.84439e-12, 0, 1.25, 0, 3.05533e-13, 0, 28.625, 8.26683, 10.8696, -1.02087 )
+input/ray_pickable = true
+input/capture_on_drag = false
+shape_count = 1
+shapes/0/shape = SubResource( 7 )
+shapes/0/transform = Transform( 0.218426, 0, -2.84217e-14, 0, 0.218426, 0, 8.32667e-17, 0, 0.218426, 0, 0, 0 )
+shapes/0/trigger = false
+collision/layers = 1
+collision/mask = 1
+mode = 1
+mass = 1.0
+friction = 1.0
+bounce = 0.0
+gravity_scale = 1.0
+custom_integrator = false
+continuous_cd = false
+contacts_reported = 0
+contact_monitor = false
+sleeping = false
+can_sleep = true
+axis_lock = 0
+velocity/linear = Vector3( 0, 0, 0 )
+velocity/angular = Vector3( 0, 0, 0 )
+damp_override/linear = -1.0
+damp_override/angular = -1.0
+
+[node name="CollisionShape" type="CollisionShape" parent="Map/SelectStart_Box_Bottom"]
+
+_import_transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
+transform/local = Transform( 0.218426, 0, -2.84217e-14, 0, 0.218426, 0, 8.32667e-17, 0, 0.218426, 0, 0, 0 )
+shape = SubResource( 7 )
+trigger = false
+_update_shape_index = 0
+
+[node name="Select_Button" type="RigidBody" parent="Map"]
+
+editor/display_folded = true
+_import_transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
+transform/local = Transform( 1.75, 0, -8.52651e-14, 0, 1.65, 0, 2.4869e-14, 0, 6, 6.092, 11.0374, 1.89406 )
+input/ray_pickable = true
+input/capture_on_drag = false
+shape_count = 1
+shapes/0/shape = SubResource( 6 )
+shapes/0/transform = Transform( 0.217833, 0, -3.55271e-15, 0, 0.217833, 0, 0, 0, 0.217833, 0, 0, 0 )
+shapes/0/trigger = false
+collision/layers = 1
+collision/mask = 1
+mode = 1
+mass = 1.0
+friction = 1.0
+bounce = 0.0
+gravity_scale = 1.0
+custom_integrator = false
+continuous_cd = false
+contacts_reported = 0
+contact_monitor = false
+sleeping = false
+can_sleep = true
+axis_lock = 0
+velocity/linear = Vector3( 0, 0, 0 )
+velocity/angular = Vector3( 0, 0, 0 )
+damp_override/linear = -1.0
+damp_override/angular = -1.0
+
+[node name="Select_Button_Box" type="CollisionShape" parent="Map/Select_Button"]
+
+_import_transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
+transform/local = Transform( 0.217833, 0, -3.55271e-15, 0, 0.217833, 0, 0, 0, 0.217833, 0, 0, 0 )
+shape = SubResource( 6 )
+trigger = false
+_update_shape_index = 0
+
+[node name="SelectStart_Box_Left" type="RigidBody" parent="Map"]
+
+editor/display_folded = true
+_import_transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
+transform/local = Transform( -0.000759589, -9.05676e-08, 11.25, -3.20142e-11, 1.21, 8.42054e-07, -1.1, 3.52156e-11, -0.00776853, 6.05151, 10.8761, 4.9964 )
+input/ray_pickable = true
+input/capture_on_drag = false
+shape_count = 1
+shapes/0/shape = SubResource( 6 )
+shapes/0/transform = Transform( 0.217833, 0, -3.55271e-15, 0, 0.217833, 0, 0, 0, 0.217833, 0, 0, 0 )
+shapes/0/trigger = false
+collision/layers = 1
+collision/mask = 1
+mode = 1
+mass = 1.0
+friction = 1.0
+bounce = 0.0
+gravity_scale = 1.0
+custom_integrator = false
+continuous_cd = false
+contacts_reported = 0
+contact_monitor = false
+sleeping = false
+can_sleep = true
+axis_lock = 0
+velocity/linear = Vector3( 0, 0, 0 )
+velocity/angular = Vector3( 0, 0, 0 )
+damp_override/linear = -1.0
+damp_override/angular = -1.0
+
+[node name="Select_Button_Box" type="CollisionShape" parent="Map/SelectStart_Box_Left"]
+
+_import_transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
+transform/local = Transform( 0.217833, 0, -3.55271e-15, 0, 0.217833, 0, 0, 0, 0.217833, 0, 0, 0 )
+shape = SubResource( 6 )
+trigger = false
+_update_shape_index = 0
+
+[node name="SelectStart_Box_Right" type="RigidBody" parent="Map"]
+
+editor/display_folded = true
+_import_transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
+transform/local = Transform( -0.000759589, -9.05676e-08, 11.25, -3.20142e-11, 1.21, 8.42054e-07, -1.1, 3.52156e-11, -0.00776853, 6.05151, 10.8761, -7.05636 )
+input/ray_pickable = true
+input/capture_on_drag = false
+shape_count = 1
+shapes/0/shape = SubResource( 6 )
+shapes/0/transform = Transform( 0.217833, 0, -3.55271e-15, 0, 0.217833, 0, 0, 0, 0.217833, 0, 0, 0 )
+shapes/0/trigger = false
+collision/layers = 1
+collision/mask = 1
+mode = 1
+mass = 1.0
+friction = 1.0
+bounce = 0.0
+gravity_scale = 1.0
+custom_integrator = false
+continuous_cd = false
+contacts_reported = 0
+contact_monitor = false
+sleeping = false
+can_sleep = true
+axis_lock = 0
+velocity/linear = Vector3( 0, 0, 0 )
+velocity/angular = Vector3( 0, 0, 0 )
+damp_override/linear = -1.0
+damp_override/angular = -1.0
+
+[node name="Select_Button_Box" type="CollisionShape" parent="Map/SelectStart_Box_Right"]
+
+_import_transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
+transform/local = Transform( 0.217833, 0, -3.55271e-15, 0, 0.217833, 0, 0, 0, 0.217833, 0, 0, 0 )
+shape = SubResource( 6 )
+trigger = false
+_update_shape_index = 0
+
+[node name="Start_Button" type="RigidBody" parent="Map"]
+
+editor/display_folded = true
+_import_transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
+transform/local = Transform( 1.75, 0, -1.42109e-13, 0, 1.65, 0, 7.81597e-14, 0, 6, 6.092, 11.0374, -3.78539 )
+input/ray_pickable = true
+input/capture_on_drag = false
+shape_count = 1
+shapes/0/shape = SubResource( 6 )
+shapes/0/transform = Transform( 0.217833, 0, -3.55271e-15, 0, 0.217833, 0, 0, 0, 0.217833, 0, 0, 0 )
+shapes/0/trigger = false
+collision/layers = 1
+collision/mask = 1
+mode = 1
+mass = 1.0
+friction = 1.0
+bounce = 0.0
+gravity_scale = 1.0
+custom_integrator = false
+continuous_cd = false
+contacts_reported = 0
+contact_monitor = false
+sleeping = false
+can_sleep = true
+axis_lock = 0
+velocity/linear = Vector3( 0, 0, 0 )
+velocity/angular = Vector3( 0, 0, 0 )
+damp_override/linear = -1.0
+damp_override/angular = -1.0
+
+[node name="Start_Button_Box" type="CollisionShape" parent="Map/Start_Button"]
+
+_import_transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
+transform/local = Transform( 0.217833, 0, -3.55271e-15, 0, 0.217833, 0, 0, 0, 0.217833, 0, 0, 0 )
+shape = SubResource( 6 )
+trigger = false
+_update_shape_index = 0
+
+[node name="DPad_LR" type="RigidBody" parent="Map"]
+
+_import_transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
+transform/local = Transform( 7.5, 0, -4.54747e-12, 0, 4, 0, 1.56319e-12, 0, 21.5, 3.96187, 11.3915, 16.0156 )
+input/ray_pickable = true
+input/capture_on_drag = false
+shape_count = 1
+shapes/0/shape = SubResource( 8 )
+shapes/0/transform = Transform( 0.22008, 0, 8.88178e-15, 0, 0.22008, 0, -4.44089e-16, 0, 0.22008, 0, 0, 0 )
+shapes/0/trigger = false
+collision/layers = 1
+collision/mask = 1
+mode = 1
+mass = 1.0
+friction = 1.0
+bounce = 0.0
+gravity_scale = 1.0
+custom_integrator = false
+continuous_cd = false
+contacts_reported = 0
+contact_monitor = false
+sleeping = false
+can_sleep = true
+axis_lock = 0
+velocity/linear = Vector3( 0, 0, 0 )
+velocity/angular = Vector3( 0, 0, 0 )
+damp_override/linear = -1.0
+damp_override/angular = -1.0
+
+[node name="CollisionShape" type="CollisionShape" parent="Map/DPad_LR"]
+
+_import_transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
+transform/local = Transform( 0.22008, 0, 8.88178e-15, 0, 0.22008, 0, -4.44089e-16, 0, 0.22008, 0, 0, 0 )
+shape = SubResource( 8 )
+trigger = false
+_update_shape_index = 0
+
+[node name="DPad_UD" type="RigidBody" parent="Map"]
+
+_import_transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
+transform/local = Transform( -0.0427074, -3.45562e-07, 21.8996, -1.84173e-09, 4, 1.89195e-06, -7.49988, 9.82254e-10, -0.124705, 4.06299, 11.3915, 16.0156 )
+input/ray_pickable = true
+input/capture_on_drag = false
+shape_count = 1
+shapes/0/shape = SubResource( 8 )
+shapes/0/transform = Transform( 0.22008, 0, 8.88178e-15, 0, 0.22008, 0, -4.44089e-16, 0, 0.22008, 0, 0, 0 )
+shapes/0/trigger = false
+collision/layers = 1
+collision/mask = 1
+mode = 1
+mass = 1.0
+friction = 1.0
+bounce = 0.0
+gravity_scale = 1.0
+custom_integrator = false
+continuous_cd = false
+contacts_reported = 0
+contact_monitor = false
+sleeping = false
+can_sleep = true
+axis_lock = 0
+velocity/linear = Vector3( 0, 0, 0 )
+velocity/angular = Vector3( 0, 0, 0 )
+damp_override/linear = -1.0
+damp_override/angular = -1.0
+
+[node name="CollisionShape" type="CollisionShape" parent="Map/DPad_UD"]
+
+_import_transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
+transform/local = Transform( 0.22008, 0, 8.88178e-15, 0, 0.22008, 0, -4.44089e-16, 0, 0.22008, 0, 0, 0 )
+shape = SubResource( 8 )
+trigger = false
+_update_shape_index = 0
+
 [node name="Player" parent="." instance=ExtResource( 3 )]
 
 transform/local = Transform( 0.514702, 0, 0, 0, 0.514702, 0, 0, 0, 0.514702, 38.6087, 42.4199, 0 )
@@ -287,7 +603,5 @@ continuous_cd = true
 [node name="Enemy" parent="." instance=ExtResource( 4 )]
 
 transform/local = Transform( 0.977519, 0, 0, 0, 0.977519, 0, 0, 0, 0.977519, 22.7125, 37.3402, -20.8175 )
-
-[node name="Dpad_HitBox" type="Node" parent="."]
 
 

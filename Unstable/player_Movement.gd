@@ -2,9 +2,10 @@
 extends RigidBody
 
 #Macros for various speed and rotational items
-var MoveSpeed = 10.0
-var RotationDisplacement = PI/90
-var jumpHeight = 12
+const MoveSpeed = 10.0
+const RotationDisplacement = PI/90
+const jumpHeight = 10
+const heightOffset = 1.5
 
 var onFloor = false
 var jumping = false
@@ -189,11 +190,9 @@ func _integrate_forces(state):
 			var playerPosition = get_global_transform()
 
 			#we need to consider if it is on top of it
-			var objectTop = collidingObjectPosition.origin.y *2
+			var objectTop = collidingObjectPosition.origin.y
 			
-			print(playerPosition.origin.y, " vs ", objectTop)
-			
-			if((playerPosition.origin.y < objectTop && jumping)):
+			if((playerPosition.origin.y - heightOffset < objectTop && jumping)):
 				
 								
 				#calculate and apply collision pushback				
@@ -213,6 +212,11 @@ func _integrate_forces(state):
 				
 				#determine push away angle			
 				var pushAngle = (angleToObject-PI) + offset
+				
+				print(moveAngle)
+				print(angleToObject)
+				print(pushAngle)
+				
 				
 				#calculate direction vectors as if we are to move to it
 				var xToObject = MoveSpeed * sin(pushAngle)
