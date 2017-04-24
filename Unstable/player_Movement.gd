@@ -25,7 +25,7 @@ const my_data = preload("Entity_Data.gd")
 onready var myStats = my_data.new()
 
 func _ready():
-	myStats.set_My_Vals(-1, 100, 15, 10, 15, 3)
+	myStats.set_My_Vals(-1, 100, 15, 10, 15, 4)
 	self.set_process(true)
 	
 func _process(delta):
@@ -274,24 +274,36 @@ func CheckKeys(state):
 	last_rotation = get_rotation()
 
 # Pushes in opposite directon of movement.
-# only kinda works.... 
+# Figure out a way to make it predictive??
 func Push_Back():
-	var oppositeLength = abs(get_translation().z - OriginOfMove.z)
-	var adjacentLength = abs(get_translation().x - OriginOfMove.x)
+	# get difference between Origin and Current Location
+	var oppositeLength = get_translation().z - OriginOfMove.z
+	var adjacentLength = get_translation().x - OriginOfMove.x
 	
-	var MoveAngle = atan(oppositeLength/adjacentLength)
+	# calculate the angle
+	var MoveAngle = atan2(oppositeLength, adjacentLength)
+	#print("M: " + str(MoveAngle))
 	
-	var pushAngle = MoveAngle + PI
-	
+	# make sure angle is within range
 	#change to while loops??
 	if(MoveAngle > (2*PI)):
 		MoveAngle -= (2*PI)
 	elif(MoveAngle < 0):
 		MoveAngle += (2*PI)
 	
+	# Prep to push in 180 deg
+	var pushAngle = MoveAngle + PI
+	# make sure push angle is valid
+	if(pushAngle > 2*PI):
+		pushAngle -= 2*PI
+	#print("P: " + str(pushAngle))
+	
+	# get Push Vec components
 	var xPush = cos(pushAngle)
 	var zPush = sin(pushAngle)
 	
-	var pushVec = Vector3(xPush, 0, zPush) * 5
+	# push back set amount.
+	var pushVec = Vector3(xPush, 0, zPush)
+	print(pushVec)
 	
 	set_translation(get_translation() + pushVec)

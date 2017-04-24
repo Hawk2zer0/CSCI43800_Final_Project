@@ -66,11 +66,11 @@ extents = Vector3( 1, 1, 1 )
 
 extents = Vector3( 1, 1, 1 )
 
-[sub_resource type="BoxShape" id=7]
+[sub_resource type="BoxShape" id=6]
 
 extents = Vector3( 1, 1, 1 )
 
-[sub_resource type="BoxShape" id=6]
+[sub_resource type="BoxShape" id=7]
 
 extents = Vector3( 1, 1, 1 )
 
@@ -301,7 +301,7 @@ transform/local = Transform( 1.1, 0, -7.04858e-12, 0, 1.25, 0, 2.77112e-13, 0, 2
 input/ray_pickable = true
 input/capture_on_drag = false
 shape_count = 1
-shapes/0/shape = SubResource( 7 )
+shapes/0/shape = SubResource( 6 )
 shapes/0/transform = Transform( 0.218426, 0, -2.84217e-14, 0, 0.218426, 0, 8.32667e-17, 0, 0.218426, 0, 0, 0 )
 shapes/0/trigger = false
 collision/layers = 1
@@ -327,7 +327,7 @@ damp_override/angular = -1.0
 
 _import_transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
 transform/local = Transform( 0.218426, 0, -2.84217e-14, 0, 0.218426, 0, 8.32667e-17, 0, 0.218426, 0, 0, 0 )
-shape = SubResource( 7 )
+shape = SubResource( 6 )
 trigger = false
 _update_shape_index = 0
 
@@ -339,7 +339,7 @@ transform/local = Transform( 1.1, 0, -7.84439e-12, 0, 1.25, 0, 3.05533e-13, 0, 2
 input/ray_pickable = true
 input/capture_on_drag = false
 shape_count = 1
-shapes/0/shape = SubResource( 7 )
+shapes/0/shape = SubResource( 6 )
 shapes/0/transform = Transform( 0.218426, 0, -2.84217e-14, 0, 0.218426, 0, 8.32667e-17, 0, 0.218426, 0, 0, 0 )
 shapes/0/trigger = false
 collision/layers = 1
@@ -365,7 +365,7 @@ damp_override/angular = -1.0
 
 _import_transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
 transform/local = Transform( 0.218426, 0, -2.84217e-14, 0, 0.218426, 0, 8.32667e-17, 0, 0.218426, 0, 0, 0 )
-shape = SubResource( 7 )
+shape = SubResource( 6 )
 trigger = false
 _update_shape_index = 0
 
@@ -377,7 +377,7 @@ transform/local = Transform( 1.75, 0, -8.52651e-14, 0, 1.65, 0, 2.4869e-14, 0, 6
 input/ray_pickable = true
 input/capture_on_drag = false
 shape_count = 1
-shapes/0/shape = SubResource( 6 )
+shapes/0/shape = SubResource( 7 )
 shapes/0/transform = Transform( 0.217833, 0, -3.55271e-15, 0, 0.217833, 0, 0, 0, 0.217833, 0, 0, 0 )
 shapes/0/trigger = false
 collision/layers = 1
@@ -403,7 +403,7 @@ damp_override/angular = -1.0
 
 _import_transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
 transform/local = Transform( 0.217833, 0, -3.55271e-15, 0, 0.217833, 0, 0, 0, 0.217833, 0, 0, 0 )
-shape = SubResource( 6 )
+shape = SubResource( 7 )
 trigger = false
 _update_shape_index = 0
 
@@ -415,7 +415,7 @@ transform/local = Transform( -0.000759589, -9.05676e-08, 11.25, -3.20142e-11, 1.
 input/ray_pickable = true
 input/capture_on_drag = false
 shape_count = 1
-shapes/0/shape = SubResource( 6 )
+shapes/0/shape = SubResource( 7 )
 shapes/0/transform = Transform( 0.217833, 0, -3.55271e-15, 0, 0.217833, 0, 0, 0, 0.217833, 0, 0, 0 )
 shapes/0/trigger = false
 collision/layers = 1
@@ -441,7 +441,7 @@ damp_override/angular = -1.0
 
 _import_transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
 transform/local = Transform( 0.217833, 0, -3.55271e-15, 0, 0.217833, 0, 0, 0, 0.217833, 0, 0, 0 )
-shape = SubResource( 6 )
+shape = SubResource( 7 )
 trigger = false
 _update_shape_index = 0
 
@@ -453,7 +453,7 @@ transform/local = Transform( -0.000759589, -9.05676e-08, 11.25, -3.20142e-11, 1.
 input/ray_pickable = true
 input/capture_on_drag = false
 shape_count = 1
-shapes/0/shape = SubResource( 6 )
+shapes/0/shape = SubResource( 7 )
 shapes/0/transform = Transform( 0.217833, 0, -3.55271e-15, 0, 0.217833, 0, 0, 0, 0.217833, 0, 0, 0 )
 shapes/0/trigger = false
 collision/layers = 1
@@ -479,7 +479,7 @@ damp_override/angular = -1.0
 
 _import_transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
 transform/local = Transform( 0.217833, 0, -3.55271e-15, 0, 0.217833, 0, 0, 0, 0.217833, 0, 0, 0 )
-shape = SubResource( 6 )
+shape = SubResource( 7 )
 trigger = false
 _update_shape_index = 0
 
@@ -491,7 +491,7 @@ transform/local = Transform( 1.75, 0, -1.42109e-13, 0, 1.65, 0, 7.81597e-14, 0, 
 input/ray_pickable = true
 input/capture_on_drag = false
 shape_count = 1
-shapes/0/shape = SubResource( 6 )
+shapes/0/shape = SubResource( 7 )
 shapes/0/transform = Transform( 0.217833, 0, -3.55271e-15, 0, 0.217833, 0, 0, 0, 0.217833, 0, 0, 0 )
 shapes/0/trigger = false
 collision/layers = 1
@@ -517,7 +517,7 @@ damp_override/angular = -1.0
 
 _import_transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
 transform/local = Transform( 0.217833, 0, -3.55271e-15, 0, 0.217833, 0, 0, 0, 0.217833, 0, 0, 0 )
-shape = SubResource( 6 )
+shape = SubResource( 7 )
 trigger = false
 _update_shape_index = 0
 
