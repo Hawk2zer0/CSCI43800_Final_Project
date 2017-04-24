@@ -81,6 +81,7 @@ func _integrate_forces(state):
 			if(TakeAction()):
 				myStats._active = false
 				
+# Boolean function used to determine what (if) an action was take
 func TakeAction():
 	# Attack
 	if(Input.is_key_pressed(KEY_Z)):
@@ -219,8 +220,7 @@ func CheckKeys(state):
 			
 			if((playerPosition.origin.y - heightOffset < objectTop && jumping)):
 				
-								
-				#calculate and apply collision pushback				
+				#calculate and apply collision pushback
 				var oppositeLength = abs(collidingObjectPosition.origin.x - playerPosition.origin.x)
 				var adjacentLength = abs(collidingObjectPosition.origin.z - playerPosition.origin.z)
 				
@@ -237,11 +237,6 @@ func CheckKeys(state):
 				
 				#determine push away angle			
 				var pushAngle = (angleToObject-PI) + offset
-				
-				print(moveAngle)
-				print(angleToObject)
-				print(pushAngle)
-				
 				
 				#calculate direction vectors as if we are to move to it
 				var xToObject = MoveSpeed * sin(pushAngle)
@@ -304,6 +299,6 @@ func Push_Back():
 	
 	# push back set amount.
 	var pushVec = Vector3(xPush, 0, zPush)
-	print(pushVec)
+	#print(pushVec)
 	
 	set_translation(get_translation() + pushVec)

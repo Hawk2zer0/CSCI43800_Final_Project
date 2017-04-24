@@ -26,17 +26,20 @@ func _process(delta):
 func Set_Origin(entity):
 	set_global_transform(entity.get_global_transform())
 	#get_global_transform().rotated(Vector3(1, 0 , 0), 90)
-	print(get_translation())
+	#print(get_translation())
 
+# dont really need this anymore
 func _on_body_enter(body):
 	if(body == get_parent().get_parent().get_node("Player-Battle")):
 		if(body.myStats._active):
-			print(body.get_name(), " has entered the area!")
+			#print(body.get_name(), " has entered the area!")
+			pass
 
+# only need to worry about this for player b/c AI will take care of enemy movement.
 func _on_body_exit(body):
 	if(body == get_parent().get_parent().get_node("Player-Battle")):
 		if(body.myStats._active):
-			print(body.get_name(), " has exited the area!")
+			#print(body.get_name(), " has exited the area!")
 			body.Push_Back()
 		
 			#body.set_axis_velocity(Vector3(0,5,0))
