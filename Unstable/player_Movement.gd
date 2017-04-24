@@ -2,9 +2,10 @@
 extends RigidBody
 
 #Macros for various speed and rotational items
-var MoveSpeed = 10.0
-var RotationDisplacement = PI/90
-var jumpHeight = 12
+const MoveSpeed = 10.0
+const RotationDisplacement = PI/90
+const jumpHeight = 10
+const heightOffset = 1.5
 
 var onFloor = false
 var jumping = false
@@ -61,7 +62,11 @@ func update_hud():
 	get_node("TestCube/Camera/Player_Atk_Spd").set_text(str(myStats.get_speed()))
 
 	# Enemy HP label update
-	get_node("TestCube/Camera/Enemy_HP").set_text("Testing Enemy HP Value set.")
+	if(get_node("/root/SceneManager").getSceneID() > 1):
+		get_node("TestCube/Camera/Enemy_HP_Bar1").show()
+		get_node("TestCube/Camera/Enemy_HP").set_text("Enemy 1")
+		#get_parent().get_node("Enemy").get_cur_HP()
+		get_node("TestCube/Camera/Battle_Menu").show()	
 	
 func _integrate_forces(state):
 	#reset rotation
@@ -196,68 +201,70 @@ func CheckKeys(state):
 		set_transform(Transform(thisRotation,playerLoc.origin))	
 		
 	#Collision Detection and handling
+	var Map = get_parent().get_node("Map")
 	
-	var scene = SceneManager.getCurrentScene()
+	#check what we are colliding with
+	var collidingBodies = get_colliding_bodies()
+	#print(collidingBodies)
 	
-	# make sure there is an active scene.
-	if(scene != null):
-		var Map = get_node("/root/" + scene.get_name() + "/Map")
-		#check what we are colliding with
-		var collidingBodies = get_colliding_bodies()
-		#print(collidingBodies)
-		
-		for body in collidingBodies:
-			#we won't care about the map collision, as that is normal
-			if (body != Map):
-				var collidingObjectPosition = body.get_translation()
-				var collidingObjectScale = body.get_scale()
-				var playerPosition = get_translation()
-	
-				#we need to consider if it is on top of it
-				var objectTop = collidingObjectPosition.y + (collidingObjectScale.y/4)
+	for body in collidingBodies:
+		#we won't care about the map collision, as that is normal
+		if (body != Map):
+			isColliding = true
+			var collidingObjectPosition = body.get_global_transform()
+			var playerPosition = get_global_transform()
+
+			#we need to consider if it is on top of it
+			var objectTop = collidingObjectPosition.origin.y
+			
+			if((playerPosition.origin.y - heightOffset < objectTop && jumping)):
 				
-				if((playerPosition.y < objectTop)):
-					isColliding = true
-					
-					#calculate and apply collision pushback
-					var oppositeLength = abs(collidingObjectPosition.x - playerPosition.x)
-					var adjacentLength = abs(collidingObjectPosition.z - playerPosition.z)
-					
-					#calculate angle to object
-					var angleToObject = atan(oppositeLength/adjacentLength)
-					
-					if(angleToObject > (2*PI)):
-						angleToObject -= (2*PI)
-					elif(angleToObject < 0):
-						angleToObject += (2*PI)
-					
-					#determine offset of the player's actual angle and the angle of the object
-					var offset = angleToObject - moveAngle
-					
-					#determine push away angle			
-					var pushAngle = (angleToObject-PI) + offset
-					
-					#calculate direction vectors as if we are to move to it
-					var xToObject = sin(pushAngle)
-					var zToObject = cos(pushAngle)
-					
-					#apply pushback force
-					direction.x = xToObject
-					direction.z = zToObject
-				else:
-					onFloor = true
-					if(jumping):
-						jumping = false
+								
+				#calculate and apply collision pushback				
+				var oppositeLength = abs(collidingObjectPosition.origin.x - playerPosition.origin.x)
+				var adjacentLength = abs(collidingObjectPosition.origin.z - playerPosition.origin.z)
 				
+				#calculate angle to object
+				var angleToObject = atan(oppositeLength/adjacentLength)
+				
+				if(angleToObject > (2*PI)):
+					angleToObject -= (2*PI)
+				elif(angleToObject < 0):
+					angleToObject += (2*PI)
+				
+				#determine offset of the player's actual angle and the angle of the object
+				var offset = angleToObject - moveAngle
+				
+				#determine push away angle			
+				var pushAngle = (angleToObject-PI) + offset
+				
+				print(moveAngle)
+				print(angleToObject)
+				print(pushAngle)
+				
+				
+				#calculate direction vectors as if we are to move to it
+				var xToObject = MoveSpeed * sin(pushAngle)
+				var zToObject = MoveSpeed * cos(pushAngle)
+				
+				#apply pushback force
+				direction.x = xToObject
+				direction.z = zToObject
 			else:
-				if(body == Map):
-					if(collidingBodies.size() == 1):
-						isColliding = false
-					onFloor = true
-					if(jumping):
-						jumping = false
-						landingFlag = true
-						
+				isColliding = false
+				onFloor = true
+				if(jumping):
+					jumping = false
+			
+		else:
+			if(body == Map):
+				if(collidingBodies.size() == 1):
+					isColliding = false
+				onFloor = true
+				if(jumping):
+					jumping = false
+					landingFlag = true
+		
 	var target_direction = (direction - up*direction.dot(up))
 	
 	lv = target_direction + up*yVelocity
