@@ -65,7 +65,7 @@ func update_hud():
 		get_node("TestCube/Camera/Enemy_HP_Bar1").show()
 		get_node("TestCube/Camera/Enemy_HP").set_text("Enemy 1")
 		#get_parent().get_node("Enemy").get_cur_HP()
-		
+		get_node("TestCube/Camera/Battle_Menu").show()	
 	
 func _integrate_forces(state):
 	#reset rotation
