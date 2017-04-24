@@ -20,7 +20,7 @@ const my_data = preload("Entity_Data.gd")
 onready var myStats = my_data.new()
 
 func _ready():
-	myStats.set_My_Vals(0, 50, 10, 5, 10, 2.5)
+	myStats.set_My_Vals(0, 50, 10, 5, 10, 3.5)
 	self.set_process(true)
 	
 func _process(delta):
