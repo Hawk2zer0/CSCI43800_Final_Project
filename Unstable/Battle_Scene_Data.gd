@@ -38,6 +38,7 @@ func _process(delta):
 	CheckDeaths()
 	UpdateQueue()
 	CheckQueue()
+	BattlePlayer.setArray(arrEnemyList)
 
 func CheckDeaths():
 	var outCounter = arrEnemyList.size() - 1
@@ -57,6 +58,7 @@ func CheckDeaths():
 		var thisPlayer = get_node("./Player-Battle")
 		SceneManager.pass_scene_vars(thisPlayer.myStats.get_cur_HP(), thisPlayer.get_translation(), thisPlayer.last_rotation, thisPlayer.moveAngle)
 		get_node("/root/SceneManager").setScene("res://Parent_Node.tscn", 1)
+		
 
 
 func makeEnemies():
@@ -68,6 +70,7 @@ func makeEnemies():
 		var newEnemy = EnemyProto.instance()
 		
 		newEnemy.set_translation(arrEnemySpawns[i].get_translation())
+		newEnemy.set_rotation(Vector3(0, 3, 0))
 		#newEnemy.set_translation(playerPos + Vector3(10.0 + (1 * i), 0.0, 10.0 + (-1 * i)))
 		# Change enemy Name
 		newEnemy.set_name("Enemy-" + str(i))
