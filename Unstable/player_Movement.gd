@@ -63,10 +63,13 @@ func update_hud():
 
 	# Enemy HP label update
 	if(get_node("/root/SceneManager").getSceneID() > 1):
-		get_node("TestCube/Camera/Enemy_HP_Bar1").show()
-		get_node("TestCube/Camera/Enemy_HP").set_text("Enemy 1")
-		#get_parent().get_node("Enemy").get_cur_HP()
-		get_node("TestCube/Camera/Battle_Menu").show()	
+		var scene = SceneManager.getCurrentScene()
+		if(scene != null):
+			#for i in range(get_node("root/BattleNode").arrEnemyList.size()):
+				#get_node("TestCube/Camera/Enemy_HP_Bar" + str(i)).show()
+				#get_node("TestCube/Camera/Enemy_HP").set_text("Enemy" + str(i + 1))
+				#get_parent().get_node("Enemy").get_cur_HP()
+				get_node("TestCube/Camera/Battle_Menu").show()	
 	
 func _integrate_forces(state):
 	#reset rotation

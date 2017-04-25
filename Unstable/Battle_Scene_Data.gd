@@ -39,6 +39,7 @@ func _process(delta):
 	intCounter += 1
 	UpdateQueue()
 	CheckQueue()
+	
 
 func makeEnemies():
 	var thisPlayer = get_node("./Player-Battle")

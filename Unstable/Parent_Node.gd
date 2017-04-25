@@ -12,7 +12,6 @@ func _process(delta):
 	checkKeys()
 	checkCollision()
 	
-	
 func checkCollision():
 	var player = get_node("Player")
 	

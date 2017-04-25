@@ -19,8 +19,6 @@ func setScene(scene,integer):
 	#clean our current Scene
 	currentScene.queue_free()
 	
-	setSceneID(integer)
-	
 	#load our scene file
 	var s = ResourceLoader.load(scene)
 	
@@ -29,6 +27,8 @@ func setScene(scene,integer):
 	
 	#add scene to root
 	get_tree().get_root().add_child(currentScene)	
+	
+	setSceneID(integer)
 
 func setSceneID(integer):
 	sceneID = integer
