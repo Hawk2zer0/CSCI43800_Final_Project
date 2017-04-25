@@ -20,7 +20,7 @@ var isColliding = false
 # Origin for Battle
 var OriginOfMove
 
-# instacne of data class
+# instance of data class
 const my_data = preload("Entity_Data.gd")
 onready var myStats = my_data.new()
 

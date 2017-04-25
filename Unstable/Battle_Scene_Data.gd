@@ -14,12 +14,11 @@ var boolWasActive = false
 onready var player = get_node("/root/Parent_Node/Player")
 var PlayerProto = load("res://Player.tscn")
 var EnemyProto = load("res://Enemy.tscn")
-
+var BattlePlayer = PlayerProto.instance()
 # Called when scene is ready
 func _ready():
 	self.set_process(true)
 	# add player to this scene
-	var BattlePlayer = PlayerProto.instance()
 	BattlePlayer.get_node("TestCube/Camera").make_current()
 	BattlePlayer.set_name(player.get_name() + "-Battle")
 	BattlePlayer.set_translation(player.get_translation())
@@ -31,6 +30,7 @@ func _ready():
 	arrEnemySpawns = get_node("./Map/EnemyAreas").get_children()
 	makeEnemies()
 	#get_node("./Map/MoveRadius").Set_Player()
+	
 
 # called each frame
 func _process(delta):
@@ -56,6 +56,7 @@ func CheckDeaths():
 		outCounter -= 1
 	if(arrEnemyList.size() == 0):
 		print("VICTORY")
+		get_node("/root/SceneManager").setScene("res://Parent_Node.tscn", 1)
 
 
 func makeEnemies():
@@ -119,3 +120,4 @@ func CheckQueue():
 				arrBattleQueue[0].set_origin(arrBattleQueue[0].get_translation())
 				get_node("./Map/MoveRadius").Set_Origin(arrBattleQueue[0])
 				get_node("./Map/MoveRadius/CollisionShape").get_shape().set_radius(arrBattleQueue[0].myStats.get_movement())
+				
