@@ -25,6 +25,7 @@ func _process(delta):
 
 func Set_Origin(entity):
 	set_global_transform(entity.get_global_transform())
+	set_rotation(Vector3(PI/2,0,0))
 	#get_global_transform().rotated(Vector3(1, 0 , 0), 90)
 	#print(get_translation())
 
