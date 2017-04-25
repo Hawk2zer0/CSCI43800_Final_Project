@@ -14,9 +14,6 @@ var sceneID = 1
 # EXPECTED FORMAT:
 	# Current HP, Location, Rotation, Move Angle
 var _playerVars = [100, Vector3(38.0, 48.0, 0), Vector3(0.0, 0.0, 0.0), 0]
-#var _playerHP = 100
-#var _playerLoc = Vector3(38.0, 48.0, 0)
-#var _playerRot = Vector3(
 
 func _ready():
 	# Called every time the node is added to the scene.
