@@ -225,7 +225,7 @@ func CheckKeys(state):
 				var adjacentLength = abs(collidingObjectPosition.origin.z - playerPosition.origin.z)
 				
 				#calculate angle to object
-				var angleToObject = atan(oppositeLength/adjacentLength)
+				var angleToObject = atan2(oppositeLength,adjacentLength)
 				
 				if(angleToObject > (2*PI)):
 					angleToObject -= (2*PI)

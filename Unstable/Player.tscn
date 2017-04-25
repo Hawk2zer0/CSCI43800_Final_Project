@@ -65,7 +65,7 @@ geometry/baked_light_tex_id = 0
 [node name="Camera" type="Camera" parent="TestCube"]
 
 _import_transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
-transform/local = Transform( -1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 0.0291967, 2.58013, -3.86702 )
+transform/local = Transform( -1, 0, 8.74228e-08, 2.79663e-08, 0.947452, 0.319897, -8.28289e-08, 0.319897, -0.947452, 0.0291967, 6.22967, -9.44018 )
 projection = 0
 fov = 60.0
 near = 0.1
