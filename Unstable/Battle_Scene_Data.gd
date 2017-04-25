@@ -29,6 +29,7 @@ func _ready():
 	arrEnemySpawns = get_node("./Map/EnemyAreas").get_children()
 	makeEnemies()
 	#get_node("./Map/MoveRadius").Set_Player()
+	BattlePlayer.setArray(arrEnemyList)
 	
 
 # called each frame
@@ -38,7 +39,6 @@ func _process(delta):
 	CheckDeaths()
 	UpdateQueue()
 	CheckQueue()
-	BattlePlayer.setArray(arrEnemyList)
 
 func CheckDeaths():
 	var outCounter = arrEnemyList.size() - 1

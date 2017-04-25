@@ -74,18 +74,25 @@ func update_hud():
 	# Player Attack Speed label update
 	get_node("TestCube/Camera/Player_Atk_Spd").set_text(str(myStats.get_speed()))
 
+	var initialSize = enemyList.size()
 	# Enemy HP label update
 	if(get_node("/root/SceneManager").getSceneID() > 1):
 		var scene = SceneManager.getCurrentScene()
 		print(SceneManager.getCurrentScene())
-		if(scene != null):
-			for i in range(enemyList.size()):
-				get_node("TestCube/Camera/Enemy_HP_Bar" + str(i)).show()
-				get_node("TestCube/Camera/Enemy_HP_Bar" + str(i)).set_max(enemyList[i].myStats.get_max_HP())
-				get_node("TestCube/Camera/Enemy_HP_Bar" + str(i)).set_value(float(enemyList[i].myStats.get_cur_HP()))
-				get_node("TestCube/Camera/Enemy_HP" + str(i)).show()
-				get_node("TestCube/Camera/Enemy_HP" + str(i)).set_text("Enemy " + str(i + 1))
+		if(scene != null):			
+			for i in range(initialSize):
+				if(enemyList[i].myStats.get_cur_HP() > 0):	
+					get_node("TestCube/Camera/Enemy_HP_Bar" + str(i)).set_max(enemyList[i].myStats.get_max_HP())
+					get_node("TestCube/Camera/Enemy_HP_Bar" + str(i)).show()
+					get_node("TestCube/Camera/Enemy_HP_Bar" + str(i)).set_value(float(enemyList[i].myStats.get_cur_HP()))
+					
+					get_node("TestCube/Camera/Enemy_HP" + str(i)).show()
+					get_node("TestCube/Camera/Enemy_HP" + str(i)).set_text("Enemy " + str(i + 1))
+				else:
+					get_node("TestCube/Camera/Enemy_HP" + str(i)).hide()
+					get_node("TestCube/Camera/Enemy_HP_Bar" + str(i)).hide()
 				get_node("TestCube/Camera/Battle_Menu").show()
+				
 	
 func _integrate_forces(state):
 	#reset rotation
