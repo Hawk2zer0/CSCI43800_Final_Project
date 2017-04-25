@@ -11,7 +11,6 @@ var intCounter = 0
 var boolWasActive = false
 
 # Get player instance & Enemy to copy
-onready var player = get_node("/root/Parent_Node/Player")
 var PlayerProto = load("res://Player.tscn")
 var EnemyProto = load("res://Enemy.tscn")
 var BattlePlayer = PlayerProto.instance()
@@ -19,13 +18,13 @@ var BattlePlayer = PlayerProto.instance()
 func _ready():
 	self.set_process(true)
 	# add player to this scene
+	var PlayerVars = SceneManager.get_scene_vars()
 	BattlePlayer.get_node("TestCube/Camera").make_current()
-	BattlePlayer.set_name(player.get_name() + "-Battle")
-	BattlePlayer.set_translation(player.get_translation())
-	BattlePlayer.set_rotation(player.last_rotation)
+	BattlePlayer.set_name("Player-Battle")
 	add_child(BattlePlayer)
 	# set AFTER Added to tree
-	BattlePlayer.myStats._cur_HP = player.myStats.get_cur_HP()
+	# b/c Stats class waits for player to be ready before it is made.
+	BattlePlayer.recieve_scene_vars(PlayerVars)
 	# need to do this before make enemies
 	arrEnemySpawns = get_node("./Map/EnemyAreas").get_children()
 	makeEnemies()
@@ -35,7 +34,6 @@ func _ready():
 # called each frame
 func _process(delta):
 	# Update timer for attack queue & check if someone needs to be added to Queue
-	#print(get_tree().get_current_scene())
 	intCounter += 1
 	CheckDeaths()
 	UpdateQueue()
@@ -56,19 +54,18 @@ func CheckDeaths():
 		outCounter -= 1
 	if(arrEnemyList.size() == 0):
 		print("VICTORY")
+		var thisPlayer = get_node("./Player-Battle")
+		SceneManager.pass_scene_vars(thisPlayer.myStats.get_cur_HP(), thisPlayer.get_translation(), thisPlayer.last_rotation, thisPlayer.moveAngle)
 		get_node("/root/SceneManager").setScene("res://Parent_Node.tscn", 1)
 
 
 func makeEnemies():
-	var thisPlayer = get_node("./Player-Battle")
 	# get range from 0-2, then add one to make sure there is always an enemy
 	randomize()
 	var enemyNum = randi() % 3 + 1
 	for i in range(enemyNum):
 		# Make new instance of Enemy
 		var newEnemy = EnemyProto.instance()
-		# Move enemy to new Position
-		var playerPos = thisPlayer.get_translation()
 		
 		newEnemy.set_translation(arrEnemySpawns[i].get_translation())
 		#newEnemy.set_translation(playerPos + Vector3(10.0 + (1 * i), 0.0, 10.0 + (-1 * i)))

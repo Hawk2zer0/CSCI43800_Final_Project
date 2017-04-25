@@ -29,8 +29,6 @@ func _ready():
 	self.set_process(true)
 	
 func _process(delta):
-	pass
-		
 	update_hud();
 	
 # Funciton to decrement HP
@@ -51,6 +49,13 @@ func set_active():
 	
 func set_origin(vecOriginalPos):
 	OriginOfMove = vecOriginalPos
+	
+func recieve_scene_vars(playerVars):
+	myStats._cur_HP = playerVars[0]
+	set_translation(playerVars[1])
+	set_rotation(playerVars[2])
+	last_rotation = playerVars[2]
+	moveAngle = playerVars[3]
 
 func update_hud():
 	# Player HP label update
@@ -102,6 +107,8 @@ func TakeAction():
 
 func CheckKeys(state):
 	# Check keys & Update position/rotation
+	if(Input.is_key_pressed(KEY_O)):
+		set_hit(10);
 	
 	# we only care about movement if keys are pressed that respond to movement
 	var lv = state.get_linear_velocity() #Entity Linear Velocity
