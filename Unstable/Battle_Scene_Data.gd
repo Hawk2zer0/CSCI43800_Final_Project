@@ -37,8 +37,25 @@ func _process(delta):
 	# Update timer for attack queue & check if someone needs to be added to Queue
 	#print(get_tree().get_current_scene())
 	intCounter += 1
+	CheckDeaths()
 	UpdateQueue()
 	CheckQueue()
+	
+func CheckDeaths():
+	var outCounter = arrEnemyList.size() - 1
+	while(outCounter >= 0):
+		if(arrEnemyList[outCounter].myStats.get_cur_HP() <= 0):
+			var counter = arrBattleQueue.size() - 1
+			while(counter >= 0):
+				if(arrEnemyList[outCounter] == arrBattleQueue[counter]):
+					arrBattleQueue.remove(counter)
+				counter -= 1
+			arrEnemyList[outCounter].queue_free()
+			remove_child(arrEnemyList[outCounter])
+			arrEnemyList.remove(outCounter)
+		outCounter -= 1
+	if(arrEnemyList.size() == 0):
+		print("VICTORY")
 
 func makeEnemies():
 	var thisPlayer = get_node("./Player-Battle")
@@ -84,6 +101,8 @@ func CheckQueue():
 	if(arrBattleQueue.size() > 0):
 		# If the 1st element is not active
 		if(!arrBattleQueue[0].myStats._active):
+			#if(arrBattleQueue[0].myStats.get_cur_HP() <= 0):
+			#print(arrBattleQueue[0])
 			# if the 1st element WAS active
 			if(boolWasActive):
 				arrBattleQueue.pop_front()
@@ -93,6 +112,7 @@ func CheckQueue():
 			# if this is the 1st time the element is being made active
 			else:
 				# Do attack dialog stuff
+				print(arrBattleQueue[0].get_name() + "'s Turn")
 				arrBattleQueue[0].set_active()
 				boolWasActive = true
 				arrBattleQueue[0].set_origin(arrBattleQueue[0].get_translation())

@@ -13,7 +13,7 @@ func _ready():
 	set_process(true)
 	# setting player doesn't work??
 	#player = get_parent().get_parent().get_node("Player-Battle")
-	print(get_translation())
+	#print(get_translation())
 	
 	CollShape = get_child(0)
 

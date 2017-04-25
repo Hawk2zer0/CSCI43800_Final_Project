@@ -9,7 +9,7 @@ var _defense = 10
 var _speed = 10
 # how far the entity can move
 # Good Values between 4 & 6
-var _movement = 2.5
+var _movement = 5
 # Amount of damage Taken
 var _hit = 0
 var _attacking = false
