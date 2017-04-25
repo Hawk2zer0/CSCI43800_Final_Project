@@ -28,8 +28,6 @@ func _ready():
 	# need to do this before make enemies
 	arrEnemySpawns = get_node("./Map/EnemyAreas").get_children()
 	makeEnemies()
-	#get_node("./Map/MoveRadius").Set_Player()
-	
 
 # called each frame
 func _process(delta):

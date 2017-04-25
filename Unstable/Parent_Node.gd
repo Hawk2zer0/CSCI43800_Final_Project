@@ -13,9 +13,6 @@ func _ready():
 	#var battlePlayer = get_node("/root/BattleNode")
 	var playerVars = SceneManager.get_scene_vars()
 	player.recieve_scene_vars(playerVars)
-	#player.myStats._cur_HP = playerVars[0]
-	#player.set_translation(playerVars[1])
-	#player.last_rotation = playerVars[2]
 	
 	# Set the current camera to the player's camera
 	get_node("Player/TestCube/Camera").make_current()
