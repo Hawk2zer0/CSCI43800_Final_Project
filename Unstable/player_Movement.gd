@@ -10,15 +10,20 @@ const heightOffset = 1.5
 var onFloor = false
 var jumping = false
 var landingFlag = false
+
 #Demo Walkthrough
 var last_rotation = Vector3()
 
 var moveAngle = 0
-#Collision Boolean
+
+# Collision Boolean
 var isColliding = false
 
 # Origin for Battle
 var OriginOfMove
+
+# Array of enemies
+var enemyList = []
 
 # instance of data class
 const my_data = preload("Entity_Data.gd")
@@ -57,6 +62,9 @@ func recieve_scene_vars(playerVars):
 	last_rotation = playerVars[2]
 	moveAngle = playerVars[3]
 
+func setArray(array):
+	enemyList = array
+	
 func update_hud():
 	# Player HP label update
 	get_node("TestCube/Camera/Player_HP_Bar").set_value(float(myStats.get_cur_HP()))
@@ -69,12 +77,15 @@ func update_hud():
 	# Enemy HP label update
 	if(get_node("/root/SceneManager").getSceneID() > 1):
 		var scene = SceneManager.getCurrentScene()
+		print(SceneManager.getCurrentScene())
 		if(scene != null):
-			#for i in range(get_node("root/BattleNode").arrEnemyList.size()):
-				#get_node("TestCube/Camera/Enemy_HP_Bar" + str(i)).show()
-				#get_node("TestCube/Camera/Enemy_HP").set_text("Enemy" + str(i + 1))
-				#get_parent().get_node("Enemy").get_cur_HP()
-				get_node("TestCube/Camera/Battle_Menu").show()	
+			for i in range(enemyList.size()):
+				get_node("TestCube/Camera/Enemy_HP_Bar" + str(i)).show()
+				get_node("TestCube/Camera/Enemy_HP_Bar" + str(i)).set_max(enemyList[i].myStats.get_max_HP())
+				get_node("TestCube/Camera/Enemy_HP_Bar" + str(i)).set_value(float(enemyList[i].myStats.get_cur_HP()))
+				get_node("TestCube/Camera/Enemy_HP" + str(i)).show()
+				get_node("TestCube/Camera/Enemy_HP" + str(i)).set_text("Enemy " + str(i + 1))
+				get_node("TestCube/Camera/Battle_Menu").show()
 	
 func _integrate_forces(state):
 	#reset rotation
