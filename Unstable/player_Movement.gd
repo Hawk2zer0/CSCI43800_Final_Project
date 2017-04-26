@@ -250,8 +250,8 @@ func CheckKeys(state):
 			if((playerPosition.origin.y - heightOffset < objectTop && jumping)):
 				
 				#calculate and apply collision pushback
-				var oppositeLength = collidingObjectPosition.origin.x - playerPosition.origin.x
-				var adjacentLength = collidingObjectPosition.origin.z - playerPosition.origin.z
+				var oppositeLength = abs(collidingObjectPosition.origin.x - playerPosition.origin.x)
+				var adjacentLength = abs(collidingObjectPosition.origin.z - playerPosition.origin.z)
 				
 				#calculate angle to object
 				var angleToObject = atan2(oppositeLength,adjacentLength)

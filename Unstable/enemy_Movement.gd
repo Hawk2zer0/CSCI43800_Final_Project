@@ -30,9 +30,6 @@ func _process(delta):
 func take_damage():
 	myStats.decrement_HP()
 	print(myStats.get_cur_HP())
-	if(myStats.get_cur_HP() <= 0):
-		# DIE & remove self from scene
-		pass
 		
 func set_active():
 	myStats._active = true
