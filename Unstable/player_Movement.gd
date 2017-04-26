@@ -83,10 +83,12 @@ func update_hud():
 			for i in range(initialSize):
 				var weak = weakref(enemyList[i])
 				if(weak.get_ref()):	
+					# Health bars
 					get_node("TestCube/Camera/Enemy_HP_Bar" + str(i)).set_max(enemyList[i].myStats.get_max_HP())
 					get_node("TestCube/Camera/Enemy_HP_Bar" + str(i)).show()
 					get_node("TestCube/Camera/Enemy_HP_Bar" + str(i)).set_value(float(enemyList[i].myStats.get_cur_HP()))
 					
+					# Health bar labels
 					get_node("TestCube/Camera/Enemy_HP" + str(i)).show()
 					get_node("TestCube/Camera/Enemy_HP" + str(i)).set_text(enemyList[i].myStats.get_name())
 				else:
