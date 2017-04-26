@@ -1,7 +1,10 @@
-[gd_scene load_steps=10 format=1]
+[gd_scene load_steps=15 format=1]
 
 [ext_resource path="res://Battle_Scene_Data.gd" type="Script" id=1]
 [ext_resource path="res://GameWorldUV_in.tex" type="Texture" id=2]
+[ext_resource path="res://Move_Radius.gd" type="Script" id=3]
+[ext_resource path="res://MoveAreaUV_In.tex" type="Texture" id=4]
+[ext_resource path="res://MoveArea.msh" type="Mesh" id=5]
 
 [sub_resource type="PlaneShape" id=1]
 
@@ -72,6 +75,49 @@ extents = Vector3( 1, 1, 1 )
 
 extents = Vector3( 1, 1, 1 )
 
+[sub_resource type="CapsuleShape" id=8]
+
+radius = 2.5
+height = 1.0
+
+[sub_resource type="FixedMaterial" id=9]
+
+flags/visible = true
+flags/double_sided = false
+flags/invert_faces = false
+flags/unshaded = true
+flags/on_top = false
+flags/lightmap_on_uv2 = true
+flags/colarray_is_srgb = true
+params/blend_mode = 0
+params/depth_draw = 1
+params/line_width = 0.0
+fixed_flags/use_alpha = false
+fixed_flags/use_color_array = false
+fixed_flags/use_point_size = false
+fixed_flags/discard_alpha = false
+fixed_flags/use_xy_normalmap = false
+params/diffuse = Color( 1, 1, 1, 0 )
+params/specular = Color( 0, 0, 0, 1 )
+params/emission = Color( 0.062439, 0.242188, 0.0989504, 1 )
+params/specular_exp = 0.0
+params/detail_mix = 1.0
+params/normal_depth = 1
+params/shader = 0
+params/shader_param = 0.5
+params/glow = 0
+params/point_size = 1.0
+uv_xform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
+textures/diffuse = ExtResource( 4 )
+textures/diffuse_tc = 0
+textures/detail_tc = 0
+textures/specular_tc = 0
+textures/emission_tc = 0
+textures/specular_exp_tc = 0
+textures/glow_tc = 0
+textures/normal_tc = 0
+textures/shade_param_tc = 0
+
 [node name="BattleNode" type="Node"]
 
 script/script = ExtResource( 1 )
@@ -137,6 +183,7 @@ _update_shape_index = 0
 
 [node name="WallA" type="StaticBody" parent="Map"]
 
+editor/display_folded = true
 _import_transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
 transform/local = Transform( -6.43048e-08, 0, 29.4223, 0, 41.1912, 0, -1.47112, 0, -1.2861e-06, -4.33094, 13.9377, 6.73856 )
 input/ray_pickable = true
@@ -162,6 +209,7 @@ _update_shape_index = 0
 
 [node name="WallB" type="StaticBody" parent="Map"]
 
+editor/display_folded = true
 _import_transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
 transform/local = Transform( -6.43048e-08, 0, 29.4223, 0, 41.1912, 0, -1.47112, 0, -1.2861e-06, -4.33094, 13.9377, -8.7023 )
 input/ray_pickable = true
@@ -187,6 +235,7 @@ _update_shape_index = 0
 
 [node name="WallC" type="StaticBody" parent="Map"]
 
+editor/display_folded = true
 _import_transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
 transform/local = Transform( 1.47112, 0, 9.32232e-12, 0, 41.1912, 0, -2.55795e-13, 0, 52.9602, -9.41094, 13.9377, -0.402538 )
 input/ray_pickable = true
@@ -212,6 +261,7 @@ _update_shape_index = 0
 
 [node name="WallD" type="StaticBody" parent="Map"]
 
+editor/display_folded = true
 _import_transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
 transform/local = Transform( 1.47112, 0, 9.32232e-12, 0, 41.1912, 0, -2.55795e-13, 0, 52.9602, 1.24048, 13.9377, -0.402539 )
 input/ray_pickable = true
@@ -372,5 +422,58 @@ monitoring = true
 monitorable = true
 collision/layers = 1
 collision/mask = 1
+
+[node name="MoveRadius" type="Area" parent="Map"]
+
+_import_transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
+transform/local = Transform( 1, -1.06581e-14, 6.35275e-22, 0, -4.37114e-08, -1, 1.06581e-14, 1, -4.37114e-08, 0, 0, 0 )
+input/ray_pickable = false
+input/capture_on_drag = false
+shape_count = 1
+shapes/0/shape = SubResource( 8 )
+shapes/0/transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
+shapes/0/trigger = false
+space_override = 0
+gravity_point = false
+gravity_distance_scale = 0.0
+gravity_vec = Vector3( 0, -1, 0 )
+gravity = 9.8
+linear_damp = 0.1
+angular_damp = 1.0
+priority = 0.0
+monitoring = true
+monitorable = true
+collision/layers = 1
+collision/mask = 1
+script/script = ExtResource( 3 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Map/MoveRadius"]
+
+_import_transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
+shape = SubResource( 8 )
+trigger = false
+_update_shape_index = 0
+
+[node name="MeshInstance" type="MeshInstance" parent="Map/MoveRadius"]
+
+_import_transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
+transform/local = Transform( 3.41185, -1.2793e-20, 0, 0, -1.49137e-07, 3.41185, -3.38813e-21, -3.41185, -1.49137e-07, 0, 5.83984e-08, 1.336 )
+layers = 1
+geometry/visible = true
+geometry/material_override = SubResource( 9 )
+geometry/cast_shadow = 1
+geometry/receive_shadows = true
+geometry/range_begin = 0.0
+geometry/range_end = 0.0
+geometry/extra_cull_margin = 0.0
+geometry/billboard = false
+geometry/billboard_y = false
+geometry/depth_scale = false
+geometry/visible_in_all_rooms = false
+geometry/use_baked_light = false
+geometry/baked_light_tex_id = 0
+mesh/mesh = ExtResource( 5 )
+mesh/skeleton = NodePath("..")
+material/0 = null
 
 

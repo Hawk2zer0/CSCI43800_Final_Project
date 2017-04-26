@@ -2,37 +2,38 @@
 extends RigidBody
 
 #Macros for various speed and rotational items
-var MoveSpeed = 10.0
-var RotationDisplacement = PI/90
-var jumpHeight = 12
+const MoveSpeed = 10.0
+const RotationDisplacement = PI/90
+const jumpHeight = 10
+const heightOffset = 1.5
 
 var onFloor = false
 var jumping = false
 var landingFlag = false
+
 #Demo Walkthrough
 var last_rotation = Vector3()
 
 var moveAngle = 0
-#Collision Boolean
+
+# Collision Boolean
 var isColliding = false
 
-# instacne of data class
+# Origin for Battle
+var OriginOfMove
+
+# Array of enemies
+var enemyList = []
+
+# instance of data class
 const my_data = preload("Entity_Data.gd")
 onready var myStats = my_data.new()
 
 func _ready():
-	myStats.set_My_Vals(-1, 100, 15, 10, 15, 10)
+	myStats.set_My_Vals(-1, 100, 15, 10, 15, 4)
 	self.set_process(true)
 	
 func _process(delta):
-	pass
-	
-	if(Input.is_key_pressed(KEY_Z)):
-		myStats._attacking = true
-	
-	if(Input.is_key_pressed(KEY_O)):
-		set_hit(1);
-		
 	update_hud();
 	
 # Funciton to decrement HP
@@ -40,7 +41,7 @@ func take_damage():
 	myStats.decrement_HP()
 	print(myStats.get_cur_HP())
 	if(myStats.get_cur_HP() <= 0):
-		# Remove Self from Screen
+		# DIE -> Game over scene?
 		pass
 		
 func set_hit(intEnemyAttackAmt):
@@ -50,7 +51,21 @@ func set_hit(intEnemyAttackAmt):
 	
 func set_active():
 	myStats._active = true
+	
+func set_origin(vecOriginalPos):
+	OriginOfMove = vecOriginalPos
+	
+func recieve_scene_vars(playerVars):
+	myStats._cur_HP = playerVars[0]
+	set_translation(playerVars[1])
+	set_rotation(playerVars[2])
+	last_rotation = playerVars[2]
+	moveAngle = playerVars[3]
 
+func setArray(array):
+	for i in range(array.size()):
+		enemyList.append(array[i])
+	
 func update_hud():
 	# Player HP label update
 	get_node("TestCube/Camera/Player_HP_Bar").set_value(float(myStats.get_cur_HP()))
@@ -60,14 +75,59 @@ func update_hud():
 	# Player Attack Speed label update
 	get_node("TestCube/Camera/Player_Atk_Spd").set_text(str(myStats.get_speed()))
 
+	var initialSize = enemyList.size()
 	# Enemy HP label update
-	get_node("TestCube/Camera/Enemy_HP").set_text("Testing Enemy HP Value set.")
+	if(get_node("/root/SceneManager").getSceneID() > 1):
+		var scene = SceneManager.getCurrentScene()
+		if(scene != null):
+			for i in range(initialSize):
+				var weak = weakref(enemyList[i])
+				if(weak.get_ref()):	
+					get_node("TestCube/Camera/Enemy_HP_Bar" + str(i)).set_max(enemyList[i].myStats.get_max_HP())
+					get_node("TestCube/Camera/Enemy_HP_Bar" + str(i)).show()
+					get_node("TestCube/Camera/Enemy_HP_Bar" + str(i)).set_value(float(enemyList[i].myStats.get_cur_HP()))
+					
+					get_node("TestCube/Camera/Enemy_HP" + str(i)).show()
+					get_node("TestCube/Camera/Enemy_HP" + str(i)).set_text("Enemy " + str(i + 1))
+				else:
+					get_node("TestCube/Camera/Enemy_HP" + str(i)).hide()
+					get_node("TestCube/Camera/Enemy_HP_Bar" + str(i)).hide()
+				get_node("TestCube/Camera/Battle_Menu").show()
+				
 	
 func _integrate_forces(state):
 	#reset rotation
+	# Required Every Frame
 	set_rotation(last_rotation)
 	
+	if(get_node("/root/SceneManager").getSceneID() == 1):
+		CheckKeys(state)
+	if(get_node("/root/SceneManager").getSceneID() == 2):
+		if(myStats._active):
+			CheckKeys(state)
+			if(TakeAction()):
+				myStats._active = false
+				
+# Boolean function used to determine what (if) an action was take
+func TakeAction():
+	# Attack
+	if(Input.is_key_pressed(KEY_Z)):
+		myStats._attacking = true
+		return true
+	# TEMP: Take damage
+	elif(Input.is_key_pressed(KEY_O)):
+		set_hit(10);
+		return true
+	# Pass
+	elif(Input.is_key_pressed(KEY_P)):
+		return true
+	else:
+		return false
+
+func CheckKeys(state):
 	# Check keys & Update position/rotation
+	if(Input.is_key_pressed(KEY_O)):
+		set_hit(10);
 	
 	# we only care about movement if keys are pressed that respond to movement
 	var lv = state.get_linear_velocity() #Entity Linear Velocity
@@ -171,67 +231,63 @@ func _integrate_forces(state):
 		set_transform(Transform(thisRotation,playerLoc.origin))	
 		
 	#Collision Detection and handling
+	var Map = get_parent().get_node("Map")
 	
-	var scene = SceneManager.getCurrentScene()
+	#check what we are colliding with
+	var collidingBodies = get_colliding_bodies()
+	#print(collidingBodies)
 	
-	# make sure there is an active scene.
-	if(scene != null):
-		var Map = get_node("/root/" + scene.get_name() + "/Map")
-		#check what we are colliding with
-		var collidingBodies = get_colliding_bodies()
-		#print(collidingBodies)
-		
-		for body in collidingBodies:
-			#we won't care about the map collision, as that is normal
-			if (body != Map):
-				var collidingObjectPosition = body.get_translation()
-				var collidingObjectScale = body.get_scale()
-				var playerPosition = get_translation()
-	
-				#we need to consider if it is on top of it
-				var objectTop = collidingObjectPosition.y + (collidingObjectScale.y/4)
+	for body in collidingBodies:
+		#we won't care about the map collision, as that is normal
+		if (body != Map):
+			isColliding = true
+			var collidingObjectPosition = body.get_global_transform()
+			var playerPosition = get_global_transform()
+
+			#we need to consider if it is on top of it
+			var objectTop = collidingObjectPosition.origin.y
+			
+			if((playerPosition.origin.y - heightOffset < objectTop && jumping)):
 				
-				if((playerPosition.y < objectTop)):
-					isColliding = true
-									
-					#calculate and apply collision pushback				
-					var oppositeLength = abs(collidingObjectPosition.x - playerPosition.x)
-					var adjacentLength = abs(collidingObjectPosition.z - playerPosition.z)
-					
-					#calculate angle to object
-					var angleToObject = atan(oppositeLength/adjacentLength)
-					
-					if(angleToObject > (2*PI)):
-						angleToObject -= (2*PI)
-					elif(angleToObject < 0):
-						angleToObject += (2*PI)
-					
-					#determine offset of the player's actual angle and the angle of the object
-					var offset = angleToObject - moveAngle
-					
-					#determine push away angle			
-					var pushAngle = (angleToObject-PI) + offset
-					
-					#calculate direction vectors as if we are to move to it
-					var xToObject = sin(pushAngle)
-					var zToObject = cos(pushAngle)
-					
-					#apply pushback force
-					direction.x = xToObject
-					direction.z = zToObject
-				else:
-					onFloor = true
-					if(jumping):
-						jumping = false
+				#calculate and apply collision pushback
+				var oppositeLength = collidingObjectPosition.origin.x - playerPosition.origin.x
+				var adjacentLength = collidingObjectPosition.origin.z - playerPosition.origin.z
 				
+				#calculate angle to object
+				var angleToObject = atan2(oppositeLength,adjacentLength)
+				
+				if(angleToObject > (2*PI)):
+					angleToObject -= (2*PI)
+				elif(angleToObject < 0):
+					angleToObject += (2*PI)
+				
+				#determine offset of the player's actual angle and the angle of the object
+				var offset = angleToObject - moveAngle
+				
+				#determine push away angle			
+				var pushAngle = (angleToObject-PI) + offset
+				
+				#calculate direction vectors as if we are to move to it
+				var xToObject = MoveSpeed * sin(pushAngle)
+				var zToObject = MoveSpeed * cos(pushAngle)
+				
+				#apply pushback force
+				direction.x = xToObject
+				direction.z = zToObject
 			else:
-				if(body == Map):
-					if(collidingBodies.size() == 1):
-						isColliding = false
-					onFloor = true
-					if(jumping):
-						jumping = false
-						landingFlag = true
+				isColliding = false
+				onFloor = true
+				if(jumping):
+					jumping = false
+			
+		else:
+			if(body == Map):
+				if(collidingBodies.size() == 1):
+					isColliding = false
+				onFloor = true
+				if(jumping):
+					jumping = false
+					landingFlag = true
 		
 	var target_direction = (direction - up*direction.dot(up))
 	
@@ -239,4 +295,39 @@ func _integrate_forces(state):
 	
 	state.set_linear_velocity(lv)
 	
-	last_rotation = get_rotation()	
+	last_rotation = get_rotation()
+
+# Pushes in opposite directon of movement.
+# Figure out a way to make it predictive??
+func Push_Back():
+	# get difference between Origin and Current Location
+	var oppositeLength = get_translation().z - OriginOfMove.z
+	var adjacentLength = get_translation().x - OriginOfMove.x
+	
+	# calculate the angle
+	var MoveAngle = atan2(oppositeLength, adjacentLength)
+	#print("M: " + str(MoveAngle))
+	
+	# make sure angle is within range
+	#change to while loops??
+	if(MoveAngle > (2*PI)):
+		MoveAngle -= (2*PI)
+	elif(MoveAngle < 0):
+		MoveAngle += (2*PI)
+	
+	# Prep to push in 180 deg
+	var pushAngle = MoveAngle + PI
+	# make sure push angle is valid
+	if(pushAngle > 2*PI):
+		pushAngle -= 2*PI
+	#print("P: " + str(pushAngle))
+	
+	# get Push Vec components
+	var xPush = cos(pushAngle)
+	var zPush = sin(pushAngle)
+	
+	# push back set amount.
+	var pushVec = Vector3(xPush, 0, zPush)
+	#print(pushVec)
+	
+	set_translation(get_translation() + pushVec)
