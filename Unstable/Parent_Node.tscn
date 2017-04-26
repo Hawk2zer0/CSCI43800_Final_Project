@@ -190,7 +190,7 @@ damp_override/angular = -1.0
 [node name="Arena" type="MeshInstance" parent="Map"]
 
 _import_transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
-transform/local = Transform( 4.85466, 0, -7.10543e-14, 0, 4.85466, 0, 7.10543e-14, 0, 4.85466, -0.00703784, 1.02308, -0.804535 )
+transform/local = Transform( 4.85466, 0, -2.84217e-14, 0, 4.85466, 0, 2.84217e-14, 0, 4.85466, -0.00703784, 1.02308, -0.804535 )
 layers = 1
 geometry/visible = true
 geometry/material_override = null

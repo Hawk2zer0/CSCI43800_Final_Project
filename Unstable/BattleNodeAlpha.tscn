@@ -426,7 +426,7 @@ collision/mask = 1
 [node name="MoveRadius" type="Area" parent="Map"]
 
 _import_transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
-transform/local = Transform( 1, -1.06581e-14, 6.35275e-22, 0, -4.37114e-08, -1, 1.06581e-14, 1, -4.37114e-08, -27.8932, 18.2145, 1.21925e-06 )
+transform/local = Transform( 1, -1.06581e-14, 6.35275e-22, 0, -4.37114e-08, -1, 1.06581e-14, 1, -4.37114e-08, 0, 0, 0 )
 input/ray_pickable = false
 input/capture_on_drag = false
 shape_count = 1

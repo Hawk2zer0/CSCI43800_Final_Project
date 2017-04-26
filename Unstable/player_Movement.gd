@@ -63,7 +63,8 @@ func recieve_scene_vars(playerVars):
 	moveAngle = playerVars[3]
 
 func setArray(array):
-	enemyList = array
+	for i in range(array.size()):
+		enemyList.append(array[i])
 	
 func update_hud():
 	# Player HP label update
@@ -78,10 +79,10 @@ func update_hud():
 	# Enemy HP label update
 	if(get_node("/root/SceneManager").getSceneID() > 1):
 		var scene = SceneManager.getCurrentScene()
-		print(SceneManager.getCurrentScene())
-		if(scene != null):			
+		if(scene != null):
 			for i in range(initialSize):
-				if(enemyList[i].myStats.get_cur_HP() > 0):	
+				var weak = weakref(enemyList[i])
+				if(weak.get_ref()):	
 					get_node("TestCube/Camera/Enemy_HP_Bar" + str(i)).set_max(enemyList[i].myStats.get_max_HP())
 					get_node("TestCube/Camera/Enemy_HP_Bar" + str(i)).show()
 					get_node("TestCube/Camera/Enemy_HP_Bar" + str(i)).set_value(float(enemyList[i].myStats.get_cur_HP()))
