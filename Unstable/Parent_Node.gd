@@ -38,7 +38,7 @@ func checkCollision():
 		if(body == enemyNodeA):
 			enemyNodeA.set_translation(Vector3(0,0,0))
 			SceneManager.pass_scene_vars(player.myStats.get_cur_HP(), player.get_translation(), player.last_rotation, player.moveAngle)
-			get_node("/root/SceneManager").setScene("res://BattleNodeAlpha.tscn", 2)
+			SceneManager.setScene("res://BattleNodeAlpha.tscn", 2)
 	
 func checkKeys():
 	pass

@@ -39,9 +39,9 @@ func _process(delta):
 # Funciton to decrement HP
 func take_damage():
 	myStats.decrement_HP()
-	print(myStats.get_cur_HP())
+	#print(myStats.get_cur_HP())
 	if(myStats.get_cur_HP() <= 0):
-		# DIE -> Game over scene?
+		SceneManager.setScene("res://GameOver.tscn", 3)
 		pass
 		
 func set_hit(intEnemyAttackAmt):
