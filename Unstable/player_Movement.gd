@@ -30,7 +30,7 @@ const my_data = preload("Entity_Data.gd")
 onready var myStats = my_data.new()
 
 func _ready():
-	myStats.set_My_Vals(-1, 100, 15, 10, 15, 4, "Player 1")
+	myStats.set_My_Vals(-1, 100, 15, 10, 150, 4, "Player 1")
 	self.set_process(true)
 	
 func _process(delta):
@@ -73,7 +73,7 @@ func update_hud():
 	
 	
 	# Player Attack Speed label update
-	get_node("TestCube/Camera/Player_Atk_Spd").set_text(str(myStats.get_speed()))
+	get_node("TestCube/Camera/Player_Atk_Spd").set_text(str(myStats.get_speed_counter()))
 
 	var initialSize = enemyList.size()
 	# Enemy HP label update
@@ -106,9 +106,11 @@ func _integrate_forces(state):
 		CheckKeys(state)
 	if(get_node("/root/SceneManager").getSceneID() == 2):
 		if(myStats._active):
+			get_node("./TestCube/Camera").make_current()
 			CheckKeys(state)
 			if(TakeAction()):
 				myStats._active = false
+				myStats._speed_counter = 0
 				
 # Boolean function used to determine what (if) an action was take
 func TakeAction():

@@ -57,7 +57,7 @@ func checkActive():
 	
 func checkTimers():
 	var timer_step = float(1/60)
-	print(nodeA_Timer)
+	#print(nodeA_Timer)
 	
 	if(Respawn_Controller.getNodeA_Activity() == false):
 		nodeA_Timer += 1

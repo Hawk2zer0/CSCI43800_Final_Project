@@ -20,7 +20,7 @@ const my_data = preload("Entity_Data.gd")
 onready var myStats = my_data.new()
 
 func _ready():
-	myStats.set_My_Vals(0, 50, 10, 5, 10, 3.5, "Crabbster")
+	myStats.set_My_Vals(0, 50, 10, 5, 140, 3.5, "Crabbster")
 	self.set_process(true)
 	
 func _process(delta):
@@ -43,13 +43,34 @@ func set_origin(vecOriginalPos):
 	OriginOfMove = vecOriginalPos
 	
 func _integrate_forces(state):
+	# Dont need the 1st check...
 	if(get_node("/root/SceneManager").getSceneID() == 1):
 		MakeMove(state)
 	if(get_node("/root/SceneManager").getSceneID() == 2):
 		if(myStats._active):
+			get_node("MeshInstance/Camera").make_current()
 			if(myStats.get_type() == 0):
+				# Stall here??
+				# Stall only works like this...
+				# tried making Timer for whole script, but it didn't work....
+				# Yield stops this thread from executing,
+				# when it was before the new node was set (In Battle Scene), 
+				# all the other variables were updated, but not who was active.
+				# Got some weird flickering too.
+				var t = Timer.new()
+				t.set_wait_time(1.0)
+				add_child(t)
+				t.start()
+				# timeout is a functoin built into the timer. It will release this blocked thread,
+				# thereby setting active to false & allowing the camera to stay in this pos for a while.
+				yield(t,"timeout")
+				t.stop()
+				# Should be removed from tree?
+				# works the same, but may be adding a lot of cycles...
+				remove_child(t)
 				myStats._active = false
-	
+				myStats._speed_counter = 0
+
 func MakeMove(state):
 	#reset rotation
 	set_rotation(last_rotation)
