@@ -597,6 +597,8 @@ _update_shape_index = 0
 
 [node name="BattleNodeA" type="Node" parent="."]
 
+editor/display_folded = true
+
 [node name="Enemy" parent="BattleNodeA" instance=ExtResource( 3 )]
 
 transform/local = Transform( 0.977519, 0, 0, 0, 0.977519, 0, 0, 0, 0.977519, 22.7125, 37.3402, -20.8175 )

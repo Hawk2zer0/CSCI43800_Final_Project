@@ -53,7 +53,6 @@ extents = Vector3( 1, 1, 1 )
 
 [node name="Enemy" type="RigidBody"]
 
-editor/display_folded = true
 _import_transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
 input/ray_pickable = true
 input/capture_on_drag = false
@@ -63,7 +62,7 @@ shapes/0/transform = Transform( 3, 0, 0, 0, 2.5, 0, 0, 0, 1, -0.172709, 2.523, -
 shapes/0/trigger = false
 collision/layers = 1
 collision/mask = 1
-mode = 3
+mode = 2
 mass = 1.0
 friction = 1.0
 bounce = 0.0
