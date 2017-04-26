@@ -2,8 +2,8 @@
 
 [ext_resource path="res://Parent_Node.gd" type="Script" id=1]
 [ext_resource path="res://GameWorldUV_in.tex" type="Texture" id=2]
-[ext_resource path="res://Player.tscn" type="PackedScene" id=3]
-[ext_resource path="res://Enemy.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Crabbster.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Player.tscn" type="PackedScene" id=4]
 
 [sub_resource type="PlaneShape" id=1]
 
@@ -595,13 +595,15 @@ shape = SubResource( 8 )
 trigger = false
 _update_shape_index = 0
 
-[node name="Player" parent="." instance=ExtResource( 3 )]
+[node name="BattleNodeA" type="Node" parent="."]
+
+[node name="Enemy" parent="BattleNodeA" instance=ExtResource( 3 )]
+
+transform/local = Transform( 0.977519, 0, 0, 0, 0.977519, 0, 0, 0, 0.977519, 22.7125, 37.3402, -20.8175 )
+
+[node name="Player" parent="." instance=ExtResource( 4 )]
 
 transform/local = Transform( 0.514702, 0, 0, 0, 0.514702, 0, 0, 0, 0.514702, 38.6087, 42.4199, 0 )
 continuous_cd = true
-
-[node name="Enemy" parent="." instance=ExtResource( 4 )]
-
-transform/local = Transform( 0.977519, 0, 0, 0, 0.977519, 0, 0, 0, 0.977519, 22.7125, 37.3402, -20.8175 )
 
 

@@ -2,12 +2,18 @@ extends Node
 
 onready var player = get_node("Player")
 
+onready var respawnThreshold = 900
+
+#current timers for enemy nodes
+var nodeA_Timer
+
 # Enemies here
-onready var enemyNodeA = get_node("Enemy")
+onready var enemyNodeA = get_node("BattleNodeA/Enemy")
 
 func _ready():
 	# Called every time the node is added to the scene.
 	# Initialization here
+	nodeA_Timer = 0
 	
 	# Grab the player's hp from the last battle scene
 	#var battlePlayer = get_node("/root/BattleNode")
@@ -27,8 +33,9 @@ func _ready():
 	self.set_process(true)
 	
 func _process(delta):
-	checkKeys()
 	checkCollision()
+	checkActive()
+	checkTimers()
 	
 func checkCollision():
 	
@@ -36,10 +43,26 @@ func checkCollision():
 	
 	for body in bodies:
 		if(body == enemyNodeA):
-			enemyNodeA.set_translation(Vector3(0,0,0))
-			SceneManager.pass_scene_vars(player.myStats.get_cur_HP(), player.get_translation(), player.last_rotation, player.moveAngle)
-			SceneManager.setScene("res://BattleNodeAlpha.tscn", 2)
+			if(Respawn_Controller.getNodeA_Activity() == true):
+				enemyNodeA.set_translation(Vector3(0,0,0))
+				SceneManager.pass_scene_vars(player.myStats.get_cur_HP(), player.get_translation(), player.last_rotation, player.moveAngle)
+				SceneManager.setScene("res://BattleNodeAlpha.tscn", 2)
+				Respawn_Controller.setNodeA_Activity(false)
+			
+func checkActive():
+	if(Respawn_Controller.getNodeA_Activity() == false):
+		enemyNodeA.set_hidden(true)
+	else:
+		enemyNodeA.set_hidden(false)
 	
-func checkKeys():
-	pass
+func checkTimers():
+	var timer_step = float(1/60)
+	print(nodeA_Timer)
+	
+	if(Respawn_Controller.getNodeA_Activity() == false):
+		nodeA_Timer += 1
+		if(nodeA_Timer > respawnThreshold):
+			nodeA_Timer = 0
+			Respawn_Controller.setNodeA_Activity(true)
+	
 		

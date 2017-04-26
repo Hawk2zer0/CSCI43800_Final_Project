@@ -30,7 +30,7 @@ const my_data = preload("Entity_Data.gd")
 onready var myStats = my_data.new()
 
 func _ready():
-	myStats.set_My_Vals(-1, 100, 15, 10, 15, 4)
+	myStats.set_My_Vals(-1, 100, 15, 10, 15, 4, "Player 1")
 	self.set_process(true)
 	
 func _process(delta):
@@ -88,7 +88,7 @@ func update_hud():
 					get_node("TestCube/Camera/Enemy_HP_Bar" + str(i)).set_value(float(enemyList[i].myStats.get_cur_HP()))
 					
 					get_node("TestCube/Camera/Enemy_HP" + str(i)).show()
-					get_node("TestCube/Camera/Enemy_HP" + str(i)).set_text("Enemy " + str(i + 1))
+					get_node("TestCube/Camera/Enemy_HP" + str(i)).set_text(enemyList[i].myStats.get_name())
 				else:
 					get_node("TestCube/Camera/Enemy_HP" + str(i)).hide()
 					get_node("TestCube/Camera/Enemy_HP_Bar" + str(i)).hide()

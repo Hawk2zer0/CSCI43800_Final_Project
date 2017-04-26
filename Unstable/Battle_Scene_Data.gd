@@ -12,7 +12,7 @@ var boolWasActive = false
 
 # Get player instance & Enemy to copy
 var PlayerProto = load("res://Player.tscn")
-var EnemyProto = load("res://Enemy.tscn")
+var EnemyProto = load("res://Crabbster.tscn")
 var BattlePlayer = PlayerProto.instance()
 # Called when scene is ready
 func _ready():
