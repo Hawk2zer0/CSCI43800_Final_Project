@@ -13,6 +13,8 @@ var moveAngle = 0
 var isColliding = false
 # Origin for Battle
 var OriginOfMove
+# step holder for enemy AI
+var AIDelta = 0
 
 # instance of Entity data class.
 # figure out inheritance??
@@ -20,7 +22,7 @@ const my_data = preload("Entity_Data.gd")
 onready var myStats = my_data.new()
 
 func _ready():
-	myStats.set_My_Vals(0, 50, 10, 5, 140, 3.5, "Crabbster")
+	myStats.set_My_Vals(0, 50, 10, 5, 140, 6, "Crabbster")
 	self.set_process(true)
 	
 func _process(delta):
@@ -43,7 +45,7 @@ func set_origin(vecOriginalPos):
 	OriginOfMove = vecOriginalPos
 	
 func _integrate_forces(state):
-	var delta = state.get_step()
+	var thisDelta = state.get_step()
 	
 	# Dont need the 1st check...
 	if(get_node("/root/SceneManager").getSceneID() == 1):
@@ -61,14 +63,12 @@ func _integrate_forces(state):
 				# Got some weird flickering too.
 				
 				# This doesn't currently work. Thinking through it.
-				if(get_node("/root/SceneManager").getSceneID() > 1):
-					var enemyLoc = get_transform()
-					var playerLoc = get_parent().get_node("Player-Battle").get_transform().origin
-					if(myStats._active):
-						var enemyDestination = enemyLoc.origin.linear_interpolate(playerLoc, delta)
-						delta += delta
-						enemyLoc.origin = enemyDestination
-						set_transform(enemyLoc)
+				var enemyLoc = get_transform()
+				var playerLoc = get_parent().get_node("Player-Battle").get_transform().origin
+				var enemyDestination = enemyLoc.origin.linear_interpolate(playerLoc, AIDelta)
+				AIDelta += thisDelta
+				enemyLoc.origin = enemyDestination
+				set_transform(enemyLoc)
 				
 				var t = Timer.new()
 				t.set_wait_time(1.0)
