@@ -241,6 +241,7 @@ func CheckKeys(state):
 		var thisRotation = Quat(playerLoc.basis).slerp(rotationTransform.basis,increment)
 			
 		set_transform(Transform(thisRotation,playerLoc.origin))	
+
 		
 	#Collision Detection and handling
 	var Map = get_parent().get_node("Map")

@@ -43,6 +43,8 @@ func set_origin(vecOriginalPos):
 	OriginOfMove = vecOriginalPos
 	
 func _integrate_forces(state):
+	var delta = state.get_step()
+	
 	# Dont need the 1st check...
 	if(get_node("/root/SceneManager").getSceneID() == 1):
 		MakeMove(state)
@@ -57,6 +59,17 @@ func _integrate_forces(state):
 				# when it was before the new node was set (In Battle Scene), 
 				# all the other variables were updated, but not who was active.
 				# Got some weird flickering too.
+				
+				# This doesn't currently work. Thinking through it.
+				if(get_node("/root/SceneManager").getSceneID() > 1):
+					var enemyLoc = get_transform()
+					var playerLoc = get_parent().get_node("Player-Battle").get_transform().origin
+					if(myStats._active):
+						var enemyDestination = enemyLoc.origin.linear_interpolate(playerLoc, delta)
+						delta += delta
+						enemyLoc.origin = enemyDestination
+						set_transform(enemyLoc)
+				
 				var t = Timer.new()
 				t.set_wait_time(1.0)
 				add_child(t)
@@ -95,10 +108,6 @@ func MakeMove(state):
 		-> ROATATE TO SELECTED DIRECTION
 		-> ACTUALLY MOVE
 	"""
-	if(get_node("/root/SceneManager").getSceneID() > 1):
-		var playerLoc = get_node("BattleNodeAlpha/Player").get_transform() 
-		if(myStats._active):
-			pass
 	
 	# Might not need all this stuff?
 	
