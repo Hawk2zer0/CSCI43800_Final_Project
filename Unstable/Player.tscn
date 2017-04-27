@@ -279,6 +279,51 @@ margin/top = 426.0
 margin/right = 332.0
 margin/bottom = 584.0
 
+[node name="Battle_Attack_Label" type="Label" parent="Player/Camera/Battle_Menu"]
+
+focus/ignore_mouse = true
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 0
+margin/left = 50.0
+margin/top = 35.0
+margin/right = 111.0
+margin/bottom = 49.0
+text = "Attack - Z"
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+
+[node name="Battle_Heal_Label" type="Label" parent="Player/Camera/Battle_Menu"]
+
+focus/ignore_mouse = true
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 0
+margin/left = 50.0
+margin/top = 90.0
+margin/right = 102.0
+margin/bottom = 104.0
+text = "Heal - H"
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+
+[node name="Battle_Pass_Label" type="Label" parent="Player/Camera/Battle_Menu"]
+
+focus/ignore_mouse = true
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 0
+margin/left = 191.0
+margin/top = 35.0
+margin/right = 241.0
+margin/bottom = 49.0
+text = "Pass - P"
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+
 [node name="Enemy_HP_Bar0" type="TextureProgress" parent="Player/Camera"]
 
 visibility/visible = false
