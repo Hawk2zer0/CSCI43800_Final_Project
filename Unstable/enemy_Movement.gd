@@ -70,12 +70,15 @@ func _integrate_forces(state):
 				var enemyLoc = get_transform()
 				var playerLoc = get_parent().get_node("Player-Battle").get_transform()
 				var dot = enemyLoc.origin.x*playerLoc.origin.x + enemyLoc.origin.y*playerLoc.origin.y + enemyLoc.origin.z*playerLoc.origin.z
-				if(dot < 1500):
+				if(dot < 2000):
 					var enemyDestination = enemyLoc.origin.linear_interpolate(playerLoc.origin, AIDelta)
 					AIDelta += thisDelta
 					enemyLoc.origin = enemyDestination
 					set_transform(enemyLoc)
 					print(dot)
+				elif(dot < 1000):
+					# attack player here
+					pass
 				
 				var t = Timer.new()
 				t.set_wait_time(1.0)
@@ -96,7 +99,6 @@ func MakeMove(state):
 	#reset rotation
 	set_rotation(last_rotation)
 	
-	# we only care about movement if keys are pressed that respond to movement
 	var lv = state.get_linear_velocity() #Entity Linear Velocity
 	var delta = state.get_step() #Frame Rate
 	var gravity = state.get_total_gravity() #gravitational force applied on entity
