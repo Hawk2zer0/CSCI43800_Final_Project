@@ -16,6 +16,8 @@ var OriginOfMove
 # step holder for enemy AI
 var AIDelta = 0
 
+var lastPosition
+
 # instance of Entity data class.
 # figure out inheritance??
 const my_data = preload("Entity_Data.gd")
@@ -24,6 +26,7 @@ onready var myStats = my_data.new()
 func _ready():
 	myStats.set_My_Vals(0, 50, 10, 5, 140, 6, "Crabbster")
 	self.set_process(true)
+	lastPosition = get_transform()
 	
 func _process(delta):
 	pass
@@ -45,6 +48,7 @@ func set_origin(vecOriginalPos):
 	OriginOfMove = vecOriginalPos
 	
 func _integrate_forces(state):
+	set_transform(lastPosition)
 	var thisDelta = state.get_step()
 	
 	# Dont need the 1st check...
@@ -64,11 +68,14 @@ func _integrate_forces(state):
 				
 				# This doesn't currently work. Thinking through it.
 				var enemyLoc = get_transform()
-				var playerLoc = get_parent().get_node("Player-Battle").get_transform().origin
-				var enemyDestination = enemyLoc.origin.linear_interpolate(playerLoc, AIDelta)
-				AIDelta += thisDelta
-				enemyLoc.origin = enemyDestination
-				set_transform(enemyLoc)
+				var playerLoc = get_parent().get_node("Player-Battle").get_transform()
+				var dot = enemyLoc.origin.x*playerLoc.origin.x + enemyLoc.origin.y*playerLoc.origin.y + enemyLoc.origin.z*playerLoc.origin.z
+				if(dot < 1500):
+					var enemyDestination = enemyLoc.origin.linear_interpolate(playerLoc.origin, AIDelta)
+					AIDelta += thisDelta
+					enemyLoc.origin = enemyDestination
+					set_transform(enemyLoc)
+					print(dot)
 				
 				var t = Timer.new()
 				t.set_wait_time(1.0)
@@ -83,6 +90,7 @@ func _integrate_forces(state):
 				remove_child(t)
 				myStats._active = false
 				myStats._speed_counter = 0
+				lastPosition = get_transform()
 
 func MakeMove(state):
 	#reset rotation
