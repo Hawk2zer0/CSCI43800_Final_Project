@@ -24,7 +24,7 @@ func _ready():
 	#player.last_rotation = playerVars[2]
 	
 	# Set the current camera to the player's camera
-	get_node("Player/TestCube/Camera").make_current()
+	get_node("Player/Player/Camera").make_current()
 	
 	# If there was a battle, the player's hp needs to be updated
 	#if(battlePlayer != null):
@@ -36,7 +36,7 @@ func _process(delta):
 	checkCollision()
 	checkActive()
 	checkTimers()
-	get_node("Player/TestCube/Camera").make_current()
+	get_node("Player/Player/Camera").make_current()
 	
 func checkCollision():
 	

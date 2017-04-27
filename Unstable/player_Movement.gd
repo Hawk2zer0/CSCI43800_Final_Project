@@ -68,41 +68,41 @@ func setArray(array):
 	
 func update_hud():
 	# Player HP label update
-	get_node("TestCube/Camera/Player_HP_Bar").set_value(float(myStats.get_cur_HP()))
-	get_node("TestCube/Camera/Player_HP").set_text(str(myStats.get_cur_HP()))
+	get_node("Player/Camera/Player_HP_Bar").set_value(float(myStats.get_cur_HP()))
+	get_node("Player/Camera/Player_HP").set_text(str(myStats.get_cur_HP()))
 	
 	
 	# Player Attack Speed label update
-	get_node("TestCube/Camera/Player_Atk_Spd").set_max(myStats.get_speed())
-	get_node("TestCube/Camera/Player_Atk_Spd").set_value(float(myStats.get_speed_counter()))
+	get_node("Player/Camera/Player_Atk_Spd").set_max(myStats.get_speed())
+	get_node("Player/Camera/Player_Atk_Spd").set_value(float(myStats.get_speed_counter()))
 
 	var initialSize = enemyList.size()
 	# Enemy HP label update
 	if(get_node("/root/SceneManager").getSceneID() > 1):
 		var scene = SceneManager.getCurrentScene()
 		if(scene != null):
-			get_node("TestCube/Camera/Player_Atk_Spd")
+			get_node("Player/Camera/Player_Atk_Spd")
 			for i in range(initialSize):
 				var weak = weakref(enemyList[i])
 				if(weak.get_ref()):	
 					# Health bars
-					get_node("TestCube/Camera/Enemy_HP_Bar" + str(i)).set_max(enemyList[i].myStats.get_max_HP())
-					get_node("TestCube/Camera/Enemy_HP_Bar" + str(i)).show()
-					get_node("TestCube/Camera/Enemy_HP_Bar" + str(i)).set_value(float(enemyList[i].myStats.get_cur_HP()))
+					get_node("Player/Camera/Enemy_HP_Bar" + str(i)).set_max(enemyList[i].myStats.get_max_HP())
+					get_node("Player/Camera/Enemy_HP_Bar" + str(i)).show()
+					get_node("Player/Camera/Enemy_HP_Bar" + str(i)).set_value(float(enemyList[i].myStats.get_cur_HP()))
 					
 					# Health bar labels
-					get_node("TestCube/Camera/Enemy_HP" + str(i)).show()
-					get_node("TestCube/Camera/Enemy_HP" + str(i)).set_text(enemyList[i].myStats.get_name())
+					get_node("Player/Camera/Enemy_HP" + str(i)).show()
+					get_node("Player/Camera/Enemy_HP" + str(i)).set_text(enemyList[i].myStats.get_name())
 					
 					# Speed Bar
-					get_node("TestCube/Camera/Enemy_Speed_Bar" + str(i)).set_max(enemyList[i].myStats.get_speed())
-					get_node("TestCube/Camera/Enemy_Speed_Bar" + str(i)).show()
-					get_node("TestCube/Camera/Enemy_Speed_Bar" + str(i)).set_value(enemyList[i].myStats.get_speed_counter())
+					get_node("Player/Camera/Enemy_Speed_Bar" + str(i)).set_max(enemyList[i].myStats.get_speed())
+					get_node("Player/Camera/Enemy_Speed_Bar" + str(i)).show()
+					get_node("Player/Camera/Enemy_Speed_Bar" + str(i)).set_value(enemyList[i].myStats.get_speed_counter())
 				else:
-					get_node("TestCube/Camera/Enemy_HP" + str(i)).hide()
-					get_node("TestCube/Camera/Enemy_HP_Bar" + str(i)).hide()
-					get_node("TestCube/Camera/Enemy_Speed_Bar" + str(i)).hide()
-				get_node("TestCube/Camera/Battle_Menu").show()
+					get_node("Player/Camera/Enemy_HP" + str(i)).hide()
+					get_node("Player/Camera/Enemy_HP_Bar" + str(i)).hide()
+					get_node("Player/Camera/Enemy_Speed_Bar" + str(i)).hide()
+				get_node("Player/Camera/Battle_Menu").show()
 				
 	
 func _integrate_forces(state):
@@ -114,7 +114,7 @@ func _integrate_forces(state):
 		CheckKeys(state)
 	if(get_node("/root/SceneManager").getSceneID() == 2):
 		if(myStats._active):
-			get_node("./TestCube/Camera").make_current()
+			get_node("./Player/Camera").make_current()
 			CheckKeys(state)
 			if(TakeAction()):
 				#set_linear_velocity(Vector3(0.0,0.0,0.0))

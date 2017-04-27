@@ -19,7 +19,7 @@ func _ready():
 	self.set_process(true)
 	# add player to this scene
 	var PlayerVars = SceneManager.get_scene_vars()
-	BattlePlayer.get_node("TestCube/Camera").make_current()
+	BattlePlayer.get_node("Player/Camera").make_current()
 	BattlePlayer.set_name("Player-Battle")
 	add_child(BattlePlayer)
 	# set AFTER Added to tree
@@ -128,4 +128,4 @@ func CheckQueue():
 			pass
 	else:
 		# if battle queue is empyt, make plater camera the active one.
-		get_node("./Player-Battle/TestCube/Camera").make_current()
+		get_node("./Player-Battle/Player/Camera").make_current()

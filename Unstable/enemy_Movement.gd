@@ -60,6 +60,7 @@ func _integrate_forces(state):
 		if(myStats._active):
 			get_node("MeshInstance/Camera").make_current()
 			if(myStats.get_type() == 0):
+
 				if(!turnEnded):
 					# Stall here??
 					# Stall only works like this...
@@ -173,7 +174,6 @@ func MakeMove(state):
 	#reset rotation
 	set_rotation(last_rotation)
 	
-	# we only care about movement if keys are pressed that respond to movement
 	var lv = state.get_linear_velocity() #Entity Linear Velocity
 	var delta = state.get_step() #Frame Rate
 	var gravity = state.get_total_gravity() #gravitational force applied on entity
