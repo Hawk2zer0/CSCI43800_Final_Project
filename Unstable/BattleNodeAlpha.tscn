@@ -363,6 +363,8 @@ shadow/zoffset_scale = 2.0
 
 [node name="EnemyAreas" type="Node" parent="Map"]
 
+editor/display_folded = true
+
 [node name="Area" type="Area" parent="Map/EnemyAreas"]
 
 _import_transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
