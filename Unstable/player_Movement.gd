@@ -132,7 +132,16 @@ func TakeAction():
 		set_hit(10);
 		return true
 	# Pass
+	elif(Input.is_key_pressed(KEY_X)):
+		#if(enemyLoc.distance_to(get_transform()) < 50):
+			#set_hit(10);
+			#return true
+		return true
 	elif(Input.is_key_pressed(KEY_P)):
+		return true
+	# Heal yourself a bit
+	elif(Input.is_key_pressed(KEY_H)):
+		set_hit(-20);
 		return true
 	else:
 		return false

@@ -69,6 +69,12 @@ func _integrate_forces(state):
 					# all the other variables were updated, but not who was active.
 					# Got some weird flickering too.
 					
+					# Adjust the chance for enemies to attack here. Currently set to pass on attacking 1/maxChance times per turn
+					randomize()
+					var maxChance = 3
+					var random = randi() % maxChance + 1
+					
+					
 					var myLoc = get_translation()
 					var playerLoc = get_parent().get_node("Player-Battle").get_translation()
 					
@@ -89,13 +95,18 @@ func _integrate_forces(state):
 					moveVec.z = sin(angleTo)
 					
 					var normMove = moveVec.normalized()
-					
+						
 					var PlayerNode = get_parent().get_node("Player-Battle")
 					var myAttackArea = self.get_node("AttackArea")
 					# If player in attack area
 					if(myAttackArea.get_overlapping_bodies().find(PlayerNode) != -1):
-						myStats._attacking = true
-						EndTurn()
+						# Sometimes enemy won't attack, sometimes it will. Currently 50/50
+						if(random < maxChance):
+							myStats._attacking = true
+							EndTurn()
+						if(random == maxChance):
+							print("Pass")
+							EndTurn()
 					elif(myLoc.distance_to(OriginOfMove) < myStats.get_movement()):
 						#print(myLoc.distance_to(OriginOfMove))
 						var newMove = normMove * MoveSpeed

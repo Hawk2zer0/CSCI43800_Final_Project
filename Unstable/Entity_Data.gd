@@ -62,5 +62,7 @@ func get_name():
 	return _name
 	
 func decrement_HP():
+	if(_cur_HP > _max_HP):
+		_cur_HP = _max_HP
 	_cur_HP -= _hit
 	_hit = 0	
