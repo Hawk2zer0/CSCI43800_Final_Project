@@ -73,13 +73,15 @@ func update_hud():
 	
 	
 	# Player Attack Speed label update
-	get_node("TestCube/Camera/Player_Atk_Spd").set_text(str(myStats.get_speed_counter()))
+	get_node("TestCube/Camera/Player_Atk_Spd").set_max(myStats.get_speed())
+	get_node("TestCube/Camera/Player_Atk_Spd").set_value(float(myStats.get_speed_counter()))
 
 	var initialSize = enemyList.size()
 	# Enemy HP label update
 	if(get_node("/root/SceneManager").getSceneID() > 1):
 		var scene = SceneManager.getCurrentScene()
 		if(scene != null):
+			get_node("TestCube/Camera/Player_Atk_Spd")
 			for i in range(initialSize):
 				var weak = weakref(enemyList[i])
 				if(weak.get_ref()):	
@@ -91,9 +93,15 @@ func update_hud():
 					# Health bar labels
 					get_node("TestCube/Camera/Enemy_HP" + str(i)).show()
 					get_node("TestCube/Camera/Enemy_HP" + str(i)).set_text(enemyList[i].myStats.get_name())
+					
+					# Speed Bar
+					get_node("TestCube/Camera/Enemy_Speed_Bar" + str(i)).set_max(enemyList[i].myStats.get_speed())
+					get_node("TestCube/Camera/Enemy_Speed_Bar" + str(i)).show()
+					get_node("TestCube/Camera/Enemy_Speed_Bar" + str(i)).set_value(enemyList[i].myStats.get_speed_counter())
 				else:
 					get_node("TestCube/Camera/Enemy_HP" + str(i)).hide()
 					get_node("TestCube/Camera/Enemy_HP_Bar" + str(i)).hide()
+					get_node("TestCube/Camera/Enemy_Speed_Bar" + str(i)).hide()
 				get_node("TestCube/Camera/Battle_Menu").show()
 				
 	
