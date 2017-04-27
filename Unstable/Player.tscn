@@ -144,7 +144,6 @@ material/0 = SubResource( 3 )
 
 [node name="Camera" type="Camera" parent="Player"]
 
-editor/display_folded = true
 _import_transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
 transform/local = Transform( -4.05056, 0, 3.54111e-07, 1.13279e-07, 3.83771, 1.29576, -3.35503e-07, 1.29576, -3.83771, 0.118263, 29.1348, -38.238 )
 projection = 0
@@ -280,57 +279,9 @@ margin/top = 426.0
 margin/right = 332.0
 margin/bottom = 584.0
 
-
-[node name="Battle_Attack_Label" type="Label" parent="TestCube/Camera/Battle_Menu"]
-
-focus/ignore_mouse = true
-focus/stop_mouse = true
-size_flags/horizontal = 2
-size_flags/vertical = 0
-margin/left = 50.0
-margin/top = 43.0
-margin/right = 119.0
-margin/bottom = 59.0
-text = "Attack- Z"
-percent_visible = 1.0
-lines_skipped = 0
-max_lines_visible = -1
-
-[node name="Battle_Heal_Label" type="Label" parent="TestCube/Camera/Battle_Menu"]
-
-focus/ignore_mouse = true
-focus/stop_mouse = true
-size_flags/horizontal = 2
-size_flags/vertical = 0
-margin/left = 204.0
-margin/top = 43.0
-margin/right = 273.0
-margin/bottom = 58.0
-text = "Pass- P"
-percent_visible = 1.0
-lines_skipped = 0
-max_lines_visible = -1
-
-[node name="Battle_Pass_Label" type="Label" parent="TestCube/Camera/Battle_Menu"]
-
-focus/ignore_mouse = true
-focus/stop_mouse = true
-size_flags/horizontal = 2
-size_flags/vertical = 0
-margin/left = 50.0
-margin/top = 101.0
-margin/right = 119.0
-margin/bottom = 115.0
-text = "Heal- H"
-percent_visible = 1.0
-lines_skipped = 0
-max_lines_visible = -1
-
-[node name="Enemy_HP_Bar0" type="TextureProgress" parent="TestCube/Camera"]
-
+[node name="Enemy_HP_Bar0" type="TextureProgress" parent="Player/Camera"]
 
 visibility/visible = false
-hint/tooltip = "Enemy HP"
 focus/ignore_mouse = false
 focus/stop_mouse = true
 size_flags/horizontal = 2
@@ -343,7 +294,7 @@ range/min = 0.0
 range/max = 100.0
 range/step = 1.0
 range/page = 0.0
-range/value = 75.0
+range/value = 1.0
 range/exp_edit = false
 range/rounded = false
 texture/under = ExtResource( 9 )
