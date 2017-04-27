@@ -36,6 +36,7 @@ func _process(delta):
 	checkCollision()
 	checkActive()
 	checkTimers()
+	get_node("Player/TestCube/Camera").make_current()
 	
 func checkCollision():
 	
