@@ -117,6 +117,7 @@ func _integrate_forces(state):
 			get_node("./TestCube/Camera").make_current()
 			CheckKeys(state)
 			if(TakeAction()):
+				#set_linear_velocity(Vector3(0.0,0.0,0.0))
 				myStats._active = false
 				myStats._speed_counter = 0
 				
