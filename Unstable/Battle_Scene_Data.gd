@@ -97,6 +97,7 @@ func UpdateQueue():
 		if(enemy.myStats.get_speed() <= enemy.myStats.get_speed_counter()):
 			# if enemy not in queue
 			if(arrBattleQueue.find(enemy) == -1):
+				enemy.turnEnded = false
 				arrBattleQueue.append(enemy)
 		else:
 			enemy.myStats.increment_speed_counter()
@@ -118,9 +119,13 @@ func CheckQueue():
 				print(arrBattleQueue[0].get_name() + "'s Turn")
 				arrBattleQueue[0].set_active()
 				boolWasActive = true
+				#print("here")
 				arrBattleQueue[0].set_origin(arrBattleQueue[0].get_translation())
 				get_node("./Map/MoveRadius").Set_Origin(arrBattleQueue[0])
 				get_node("./Map/MoveRadius/CollisionShape").get_shape().set_radius(arrBattleQueue[0].myStats.get_movement())
+		else:
+			#print(arrBattleQueue[0].get_translation())
+			pass
 	else:
 		# if battle queue is empyt, make plater camera the active one.
 		get_node("./Player-Battle/Player/Camera").make_current()
