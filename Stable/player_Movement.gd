@@ -30,7 +30,7 @@ const my_data = preload("Entity_Data.gd")
 onready var myStats = my_data.new()
 
 func _ready():
-	myStats.set_My_Vals(-1, 100, 15, 10, 15, 4)
+	myStats.set_My_Vals(-1, 100, 15, 10, 150, 4, "Player 1")
 	self.set_process(true)
 	
 func _process(delta):
@@ -39,9 +39,9 @@ func _process(delta):
 # Funciton to decrement HP
 func take_damage():
 	myStats.decrement_HP()
-	print(myStats.get_cur_HP())
+	#print(myStats.get_cur_HP())
 	if(myStats.get_cur_HP() <= 0):
-		# DIE -> Game over scene?
+		SceneManager.setScene("res://GameOver.tscn", 3)
 		pass
 		
 func set_hit(intEnemyAttackAmt):
@@ -73,25 +73,35 @@ func update_hud():
 	
 	
 	# Player Attack Speed label update
-	get_node("TestCube/Camera/Player_Atk_Spd").set_text(str(myStats.get_speed()))
+	get_node("TestCube/Camera/Player_Atk_Spd").set_max(myStats.get_speed())
+	get_node("TestCube/Camera/Player_Atk_Spd").set_value(float(myStats.get_speed_counter()))
 
 	var initialSize = enemyList.size()
 	# Enemy HP label update
 	if(get_node("/root/SceneManager").getSceneID() > 1):
 		var scene = SceneManager.getCurrentScene()
 		if(scene != null):
+			get_node("TestCube/Camera/Player_Atk_Spd")
 			for i in range(initialSize):
 				var weak = weakref(enemyList[i])
 				if(weak.get_ref()):	
+					# Health bars
 					get_node("TestCube/Camera/Enemy_HP_Bar" + str(i)).set_max(enemyList[i].myStats.get_max_HP())
 					get_node("TestCube/Camera/Enemy_HP_Bar" + str(i)).show()
 					get_node("TestCube/Camera/Enemy_HP_Bar" + str(i)).set_value(float(enemyList[i].myStats.get_cur_HP()))
 					
+					# Health bar labels
 					get_node("TestCube/Camera/Enemy_HP" + str(i)).show()
-					get_node("TestCube/Camera/Enemy_HP" + str(i)).set_text("Enemy " + str(i + 1))
+					get_node("TestCube/Camera/Enemy_HP" + str(i)).set_text(enemyList[i].myStats.get_name())
+					
+					# Speed Bar
+					get_node("TestCube/Camera/Enemy_Speed_Bar" + str(i)).set_max(enemyList[i].myStats.get_speed())
+					get_node("TestCube/Camera/Enemy_Speed_Bar" + str(i)).show()
+					get_node("TestCube/Camera/Enemy_Speed_Bar" + str(i)).set_value(enemyList[i].myStats.get_speed_counter())
 				else:
 					get_node("TestCube/Camera/Enemy_HP" + str(i)).hide()
 					get_node("TestCube/Camera/Enemy_HP_Bar" + str(i)).hide()
+					get_node("TestCube/Camera/Enemy_Speed_Bar" + str(i)).hide()
 				get_node("TestCube/Camera/Battle_Menu").show()
 				
 	
@@ -104,9 +114,12 @@ func _integrate_forces(state):
 		CheckKeys(state)
 	if(get_node("/root/SceneManager").getSceneID() == 2):
 		if(myStats._active):
+			get_node("./TestCube/Camera").make_current()
 			CheckKeys(state)
 			if(TakeAction()):
+				#set_linear_velocity(Vector3(0.0,0.0,0.0))
 				myStats._active = false
+				myStats._speed_counter = 0
 				
 # Boolean function used to determine what (if) an action was take
 func TakeAction():
@@ -119,7 +132,16 @@ func TakeAction():
 		set_hit(10);
 		return true
 	# Pass
+	elif(Input.is_key_pressed(KEY_X)):
+		#if(enemyLoc.distance_to(get_transform()) < 50):
+			#set_hit(10);
+			#return true
+		return true
 	elif(Input.is_key_pressed(KEY_P)):
+		return true
+	# Heal yourself a bit
+	elif(Input.is_key_pressed(KEY_H)):
+		set_hit(-20);
 		return true
 	else:
 		return false
@@ -229,6 +251,7 @@ func CheckKeys(state):
 		var thisRotation = Quat(playerLoc.basis).slerp(rotationTransform.basis,increment)
 			
 		set_transform(Transform(thisRotation,playerLoc.origin))	
+
 		
 	#Collision Detection and handling
 	var Map = get_parent().get_node("Map")
@@ -250,8 +273,8 @@ func CheckKeys(state):
 			if((playerPosition.origin.y - heightOffset < objectTop && jumping)):
 				
 				#calculate and apply collision pushback
-				var oppositeLength = collidingObjectPosition.origin.x - playerPosition.origin.x
-				var adjacentLength = collidingObjectPosition.origin.z - playerPosition.origin.z
+				var oppositeLength = abs(collidingObjectPosition.origin.x - playerPosition.origin.x)
+				var adjacentLength = abs(collidingObjectPosition.origin.z - playerPosition.origin.z)
 				
 				#calculate angle to object
 				var angleToObject = atan2(oppositeLength,adjacentLength)

@@ -12,7 +12,7 @@ var boolWasActive = false
 
 # Get player instance & Enemy to copy
 var PlayerProto = load("res://Player.tscn")
-var EnemyProto = load("res://Enemy.tscn")
+var EnemyProto = load("res://Crabbster.tscn")
 var BattlePlayer = PlayerProto.instance()
 # Called when scene is ready
 func _ready():
@@ -35,7 +35,6 @@ func _ready():
 # called each frame
 func _process(delta):
 	# Update timer for attack queue & check if someone needs to be added to Queue
-	intCounter += 1
 	CheckDeaths()
 	UpdateQueue()
 	CheckQueue()
@@ -83,28 +82,31 @@ func UpdateQueue():
 	# Update Name based on object name? -> will allow for multiple players
 	var thisPlayer = get_node("./Player-Battle")
 	# always check player speed 1st. (Change for difficulty??)
-	if(intCounter % thisPlayer.myStats.get_speed() == 0):
-		if(arrBattleQueue.size() < 10):
+	if(thisPlayer.myStats.get_speed() <= thisPlayer.myStats.get_speed_counter()):
+		# if player not in queue
+		if(arrBattleQueue.find(thisPlayer) == -1):
 			arrBattleQueue.append(thisPlayer)
+	else:
+		# Counter is reset in player.takeAction function
+		thisPlayer.myStats.increment_speed_counter()
 	
 	#print(arrEnemyList)
 	# check each enemy's speed
 	for enemy in arrEnemyList:
 		# if counter if even multiple of character speed,
-		if(intCounter % enemy.myStats.get_speed() == 0):
-			if(arrBattleQueue.size() < 10):
+		if(enemy.myStats.get_speed() <= enemy.myStats.get_speed_counter()):
+			# if enemy not in queue
+			if(arrBattleQueue.find(enemy) == -1):
+				enemy.turnEnded = false
 				arrBattleQueue.append(enemy)
-			else:
-				# reset intCounter when queue is full to avoid overflow errors.
-				intCounter = 0
-			
+		else:
+			enemy.myStats.increment_speed_counter()
+	#print(arrBattleQueue)
 # checks to see if anyone is ready to attack
 func CheckQueue():
 	if(arrBattleQueue.size() > 0):
 		# If the 1st element is not active
 		if(!arrBattleQueue[0].myStats._active):
-			#if(arrBattleQueue[0].myStats.get_cur_HP() <= 0):
-			#print(arrBattleQueue[0])
 			# if the 1st element WAS active
 			if(boolWasActive):
 				arrBattleQueue.pop_front()
@@ -117,7 +119,13 @@ func CheckQueue():
 				print(arrBattleQueue[0].get_name() + "'s Turn")
 				arrBattleQueue[0].set_active()
 				boolWasActive = true
+				#print("here")
 				arrBattleQueue[0].set_origin(arrBattleQueue[0].get_translation())
 				get_node("./Map/MoveRadius").Set_Origin(arrBattleQueue[0])
 				get_node("./Map/MoveRadius/CollisionShape").get_shape().set_radius(arrBattleQueue[0].myStats.get_movement())
-				
+		else:
+			#print(arrBattleQueue[0].get_translation())
+			pass
+	else:
+		# if battle queue is empyt, make plater camera the active one.
+		get_node("./Player-Battle/TestCube/Camera").make_current()
