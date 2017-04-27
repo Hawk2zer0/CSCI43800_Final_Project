@@ -95,6 +95,10 @@ func MakeMove(state):
 		-> ROATATE TO SELECTED DIRECTION
 		-> ACTUALLY MOVE
 	"""
+	if(get_node("/root/SceneManager").getSceneID() > 1):
+		var playerLoc = get_node("BattleNodeAlpha/Player").get_transform() 
+		if(myStats._active):
+			pass
 	
 	# Might not need all this stuff?
 	
